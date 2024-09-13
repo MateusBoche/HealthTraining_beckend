@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class UserPostgresDaoImpl implements UserDao {
@@ -32,8 +33,8 @@ public class UserPostgresDaoImpl implements UserDao {
 
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, entity.getPassword());
-            preparedStatement.setString(2, entity.getFullName());
+            preparedStatement.setString(1, entity.getSenha());
+            preparedStatement.setString(2, entity.getNomeCompleto());
             preparedStatement.setString(3, entity.getEmail());
 
             preparedStatement.execute();
@@ -75,5 +76,25 @@ public class UserPostgresDaoImpl implements UserDao {
     @Override
     public boolean updatePassword(int id, String newPassword) {
         return false;
+    }
+
+    @Override
+    public void remove(int id) {
+
+    }
+
+    @Override
+    public UserModel readById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<UserModel> readAll() {
+        return null;
+    }
+
+    @Override
+    public void updateInformation(int id, UserModel entity) {
+
     }
 }
