@@ -54,6 +54,12 @@ public class UserRestController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserModel> deleteEntity(@PathVariable final int id){
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 
