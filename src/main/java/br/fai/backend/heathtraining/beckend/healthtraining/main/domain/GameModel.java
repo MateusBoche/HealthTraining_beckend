@@ -12,7 +12,7 @@ public class GameModel {
     private int id; // String front
     private String status;
     private int nivelAtual;
-    //private int usuarioID;
+    private int usuarioID;
     private int numeroAcertos;
     private int numeroErros;
     private String dataDeCriacao;
