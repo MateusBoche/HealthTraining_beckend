@@ -3,5 +3,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.us
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.crud.CrudService;
 
-public interface UserService extends CrudService<UserModel>, UpdatePasswordService{
+public interface UserService extends CrudService<UserModel>, UpdatePasswordService, ReadByEmailService{
 }
