@@ -1,5 +1,5 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.crud;
 
-public interface UpdateDao<T> {
+public interface UpdateService<T> {
     void update(final int id, final T entity);
 }

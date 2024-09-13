@@ -1,5 +1,5 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user;
 
-public interface UpdatePasswordDao {
+public interface UpdatePasswordService {
     boolean updatePassword(final int id, final String newPassword);
 }
