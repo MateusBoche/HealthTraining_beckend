@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updatePassword(int id, String newPassword) {
+    public boolean updatePassword(int id, String oldPassword, String newPassword) {
         return false;
     }
 }

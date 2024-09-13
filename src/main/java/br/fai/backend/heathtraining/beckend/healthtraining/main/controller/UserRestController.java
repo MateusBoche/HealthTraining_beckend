@@ -1,6 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.controller;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.UpdatePasswordDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
 import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,15 @@ public class UserRestController {
     public ResponseEntity<UserModel> deleteEntity(@PathVariable final int id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity<Void> updatePassword(@RequestBody final UpdatePasswordDto data){
+        final boolean response = userService.updatePassword(data.getId(), data.getOldPassword(),data.getNewPassword());
+        return response?
+                ResponseEntity.ok().build()
+                : ResponseEntity.badRequest().build();
+
     }
 
 
