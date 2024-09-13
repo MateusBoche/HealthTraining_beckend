@@ -1,4 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user;
 
-public interface UserDao {
+import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.crud.CrudDao;
+
+public interface UserDao extends CrudDao<UserModel>,ReadByEmailDao, UpdatePasswordDao {
 }
