@@ -2,5 +2,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.questi
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.crud.CrudDao;
 
-public interface QuestionDao extends CrudDao {
+public interface QuestionDao extends CrudDao, ReadByCategoryDao {
 }
