@@ -3,5 +3,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.qu
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.QuestionModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.crud.CrudService;
 
-public interface QuestionService extends CrudService<QuestionModel> {
+public interface QuestionService extends CrudService<QuestionModel>,ReadByCategoryService {
 }

@@ -68,4 +68,14 @@ public class QuestionServiceImpl implements QuestionService {
     questionDao.updateInformation(id,entity);
 
   }
+
+  public QuestionModel findByCategory(String category) {
+    if (category.isEmpty()) {
+      return null;
+    }
+    return questionDao.readByCategory(category);
+  }
+
+
 }
+
