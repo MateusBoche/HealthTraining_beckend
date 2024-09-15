@@ -57,6 +57,12 @@ public class QuestionRestController {
     return ResponseEntity.ok().build();
   }
 
+  @DeleteMapping("/{id}")
+  public ResponseEntity<QuestionModel> deleteEntity(@PathVariable final int id){
+    questionService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+
 
 
 
