@@ -35,5 +35,13 @@ public class QuestionRestController {
     return ResponseEntity.ok().body(question);
   }
 
+  @GetMapping("/question/{categoty}")
+  public ResponseEntity<QuestionModel> getEntityByCategory(@PathVariable final String category){
+    QuestionModel question = questionService.findByCategory(category);
+    return ResponseEntity.ok().body(question);
+  }
+
+
+
 
 }
