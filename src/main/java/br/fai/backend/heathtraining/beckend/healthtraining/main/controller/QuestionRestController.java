@@ -51,6 +51,12 @@ public class QuestionRestController {
     return ResponseEntity.created(uri).build();
   }
 
+  @PutMapping("/{id}")
+  public ResponseEntity<Void> updateEntity(@PathVariable final int id, @RequestBody final QuestionModel data){
+    questionService.update(id,data);
+    return ResponseEntity.ok().build();
+  }
+
 
 
 
