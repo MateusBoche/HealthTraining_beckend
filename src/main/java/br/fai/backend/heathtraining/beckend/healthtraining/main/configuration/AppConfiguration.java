@@ -1,8 +1,10 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.configuration;
 
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.fake.QuestionFakeDaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.fake.UserFakeDaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.h2.UserH2DaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres.UserPostgresDaoImpl;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.question.QuestionDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +35,12 @@ public class AppConfiguration {
     @Profile("dev")
     public UserDao getH2Dao(final JdbcTemplate jdbcTemplate){
         return new UserH2DaoImpl(jdbcTemplate);
+    }
+
+    @Bean
+    @Profile("fake")
+    public QuestionDao getQuestionDao(){
+        return new QuestionFakeDaoImpl();
     }
 
 

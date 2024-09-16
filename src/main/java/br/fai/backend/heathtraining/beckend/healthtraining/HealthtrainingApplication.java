@@ -10,11 +10,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class HealthtrainingApplication {
 
 
-	@Autowired
-	private ResourceFileService resourceFileService;
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+//	@Autowired
+//	private ResourceFileService resourceFileService;
+//
+//	@Autowired
+//	private JdbcTemplate jdbcTemplate;
 
 
 
