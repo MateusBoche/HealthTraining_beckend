@@ -75,6 +75,11 @@ public class QuestionFakeDaoImpl implements QuestionDao {
 
     @Override
     public QuestionModel readByCategory(String category) {
+        for(QuestionModel question:questions){
+            if(question.getQuestion().equalsIgnoreCase(category)){
+                return question;
+            }
+        }
         return null;
     }
 }
