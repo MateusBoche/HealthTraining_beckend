@@ -36,22 +36,41 @@ public class QuestionFakeDaoImpl implements QuestionDao {
 
     @Override
     public void remove(int id) {
+        int itemIndex = -1;
+        for(int i = 0; i< questions.size();i++){
+            QuestionModel question = questions.get(i);
+            if(question.getId()==id){
+                itemIndex =1;
+                break;
+            }
+        }
+        if(itemIndex ==-1){
+            return;
+        }
+        QuestionModel removedEntity = questions.remove(itemIndex);
+        System.out.println("A pergunta " + removedEntity.getQuestion() + "foi removida. Id da pergunta removida " + removedEntity.getId());
 
     }
 
     @Override
     public QuestionModel readById(int id) {
+        for(QuestionModel question:questions){
+            if(question.getId()==id){
+                return question;
+            }
+        }
         return null;
     }
 
     @Override
     public List<QuestionModel> readAll() {
-        return null;
+        return questions;
     }
 
     @Override
     public void updateInformation(int id, QuestionModel entity) {
-
+        QuestionModel question = readById(id);
+        question.setQuestion(entity.getQuestion());
     }
 
     @Override
