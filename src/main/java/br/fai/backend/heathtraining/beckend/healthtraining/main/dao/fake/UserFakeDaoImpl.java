@@ -73,7 +73,7 @@ public class UserFakeDaoImpl implements UserDao {
         }
 
         UserModel removedEntity = users.remove(itemIndex);
-        System.out.println("O usuario " + removedEntity.getFullName() + " foi removido. Id do usuario removido: " + removedEntity.getId());
+        System.out.println("O usuario " + removedEntity.getNomeCompleto() + " foi removido. Id do usuario removido: " + removedEntity.getId());
 
     }
 
