@@ -150,7 +150,20 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
     @Override
     public void updateInformation(int id, QuestionModel entity) {
+        String sql = "UPDATE question_model SET question = ? ";
+        sql += " Where id = ?";
 
+        try {
+            PreparedStatement preparedStatement;
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, entity.getQuestion());
+            preparedStatement.setInt(2, entity.getId());
+
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
