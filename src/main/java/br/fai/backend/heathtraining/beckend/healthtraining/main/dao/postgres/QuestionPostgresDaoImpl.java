@@ -80,7 +80,42 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
     @Override
     public QuestionModel readById(int id) {
-        return null;
+        final String sql = "SELECT * FROM question_model WHERE id = ? ;";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection
+                    .prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                final QuestionModel question = new QuestionModel();
+
+                question.setId(resultSet.getInt("id"));
+                question.setQuestion(resultSet.getString("question"));
+                question.setAnswer(resultSet.getBoolean("aswer"));
+                question.setCategory(resultSet.getString("category"));
+                question.setPhase(resultSet.getInt("phase"));
+
+                logger.log(Level.INFO, "questao com id " + id + "encontrada");
+                return question;
+            }
+            return null;
+
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        } finally{
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
     @Override
