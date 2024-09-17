@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,8 +121,31 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
     @Override
     public List<QuestionModel> readAll() {
-        final
-        return null;
+        final List<QuestionModel> questions = new ArrayList<>();
+        final String sql = "SELECT * FROM question_model;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                final QuestionModel question = new QuestionModel();
+
+                question.setId(resultSet.getInt("id"));
+                question.setQuestion(resultSet.getString("question"));
+                question.setAnswer(resultSet.getBoolean("aswer"));
+                question.setCategory(resultSet.getString("category"));
+                question.setPhase(resultSet.getInt("phase"));
+
+                questions.add(question);
+            }
+            resultSet.close();
+            preparedStatement.close();
+            return questions;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
