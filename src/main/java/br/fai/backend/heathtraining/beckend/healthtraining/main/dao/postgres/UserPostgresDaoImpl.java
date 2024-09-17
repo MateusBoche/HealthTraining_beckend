@@ -91,8 +91,22 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(int id, String newPassword) {
-        return false;
+        String sql = "UPDATE user_model SET senha = ? ";
+        sql += " WHERE id = ? ";
+
+        try {
+            PreparedStatement preparedStatement;
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+            preparedStatement.close();
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
+
 
 
 
@@ -114,6 +128,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
                 user.setId(resultSet.getInt("id"));
                 user.setNomeCompleto(resultSet.getString("nomeCompleto"));
+                user.setEmail(resultSet.getString("email"));
                 user.setSenha(resultSet.getString("senha"));
 
                 logger.log(Level.INFO, "entidade com id" + id + " encontrada");
@@ -146,10 +161,12 @@ public class UserPostgresDaoImpl implements UserDao {
             while (resultSet.next()) {
                 int entityId = resultSet.getInt("id");
                 String nomeCompleto = resultSet.getString("nomeCompleto");
+                String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
 
                 final UserModel user = new UserModel();
                 user.setId(entityId);
+                user.setEmail(email);
                 user.setNomeCompleto(nomeCompleto);
                 user.setSenha(senha);
 
@@ -168,7 +185,7 @@ public class UserPostgresDaoImpl implements UserDao {
     public void updateInformation(int id, UserModel entity) {
 
 
-        String sql = "UPDATE user_model SET fullname = ? ";
+        String sql = "UPDATE user_model SET nomeCompleto = ? ";
         sql += " WHERE id = ? ";
 
         try {
