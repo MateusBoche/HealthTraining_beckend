@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -135,9 +136,32 @@ public class UserPostgresDaoImpl implements UserDao {
     @Override
     public List<UserModel> readAll() {
 
+        final List<UserModel> users = new ArrayList<>();
+        final String sql = "SELECT * FROM user_model";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        return null;
+            while (resultSet.next()) {
+                int entityId = resultSet.getInt("id");
+                String nomeCompleto = resultSet.getString("nomeCompleto");
+                String senha = resultSet.getString("senha");
+
+                final UserModel user = new UserModel();
+                user.setId(entityId);
+                user.setNomeCompleto(nomeCompleto);
+                user.setSenha(senha);
+
+                users.add(user);
+            }
+            resultSet.close();
+            preparedStatement.close();
+            return users;
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+
     }
 
     @Override
