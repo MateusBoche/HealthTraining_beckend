@@ -4,6 +4,7 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -94,6 +95,7 @@ public class GamePostgresDaoImpl implements GameDao {
                 game.setNivelAtual(resultSet.getInt("nivelatual"));
                 game.setNumeroErros(resultSet.getInt("numeroerros"));
                 game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
+                game.setUsuarioID(resultSet.getInt("usuarioid"));
 
                 logger.log(Level.INFO,"entidade com id " + id + " encontrada");
                 return game;
@@ -113,11 +115,35 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public List<GameModel> readAll() {
 
+        final List<GameModel> games =  new ArrayList<>();
+        final String sql = "SELECT * FROM game";
 
+        try {
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        return List.of();
+            while (resultSet.next()){
+                final GameModel game = new GameModel();
+
+                game.setId(resultSet.getInt("id"));
+                game.setStatus(resultSet.getString("status"));
+                game.setDataDeCriacao(resultSet.getString("datacriacao"));
+                game.setNivelAtual(resultSet.getInt("nivelatual"));
+                game.setNumeroErros(resultSet.getInt("numeroerros"));
+                game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
+                game.setUsuarioID(resultSet.getInt("usuarioid"));
+
+                games.add(game);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return games;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
 }
