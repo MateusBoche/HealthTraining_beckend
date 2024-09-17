@@ -3,7 +3,9 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.configuration;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.fake.QuestionFakeDaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.fake.UserFakeDaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.h2.UserH2DaoImpl;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres.GamePostgresDaoImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres.UserPostgresDaoImpl;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.question.QuestionDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +23,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    @Profile("postgres")
+    @Profile("prod")
     public UserDao getUserDao(final Connection connection){
         return new UserPostgresDaoImpl(connection);
     }
@@ -43,5 +45,16 @@ public class AppConfiguration {
         return new QuestionFakeDaoImpl();
     }
 
+    @Bean
+    @Profile("prod")
+    public GameDao getGameDao(final Connection connection){
+        return new GamePostgresDaoImpl(connection);
+    }
+
+    @Bean
+    @Profile("prod")
+    public QuestionDao getQuestionDao(final Connection connection){
+        return new QuestionPost
+    }
 
 }

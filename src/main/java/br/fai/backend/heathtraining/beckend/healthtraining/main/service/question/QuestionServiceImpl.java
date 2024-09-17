@@ -34,7 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
     if(id<0){
       return null;
     }
-    QuestionModel question = (QuestionModel) questionDao.readById(id);
+    QuestionModel question = questionDao.readById(id);
     return question;
 
   }

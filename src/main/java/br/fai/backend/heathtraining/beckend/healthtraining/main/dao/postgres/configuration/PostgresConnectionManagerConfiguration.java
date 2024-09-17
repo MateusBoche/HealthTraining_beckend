@@ -67,7 +67,7 @@ public class PostgresConnectionManagerConfiguration {
             throws SQLException, IOException {
         Connection connection = getConnection();
 
-        final String basePath = "lds-db-scripts";
+        final String basePath = "healthtraining-db-scripts";
         final String createTable = resourceFileService
                 .read(basePath + "/create-tables-postgres.sql");
         PreparedStatement createStatement = connection
@@ -89,7 +89,7 @@ public class PostgresConnectionManagerConfiguration {
     private void createDatabaseIfNotExists(Connection connection) throws
             SQLException {
         final Statement statement = connection.createStatement();
-        String sql = "SELECT COUNT(*) AS dbs ";
+        String sql = " SELECT COUNT(*) AS dbs ";
         sql += " FROM pg_catalog.pg_database ";
         sql += " WHERE lower(datname) = '"+ databaseName + "';";
 
