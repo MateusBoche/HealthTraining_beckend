@@ -76,14 +76,46 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public GameModel readById(int id) {
 
+        final String sql = "SELECT * FROM game WHERE id = ? ;";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            preparedStatement= connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()){
+                final GameModel game = new GameModel();
 
-        return null;
+                game.setId(resultSet.getInt("id"));
+                game.setStatus(resultSet.getString("status"));
+                game.setDataDeCriacao(resultSet.getString("datacriacao"));
+                game.setNivelAtual(resultSet.getInt("nivelatual"));
+                game.setNumeroErros(resultSet.getInt("numeroerros"));
+                game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
+
+                logger.log(Level.INFO,"entidade com id " + id + " encontrada");
+                return game;
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }}
     }
 
     @Override
     public List<GameModel> readAll() {
+
+
+
+
         return List.of();
     }
 
