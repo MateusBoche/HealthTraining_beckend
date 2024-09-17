@@ -14,8 +14,8 @@ CREATE TABLE question_model
 (
     id       SERIAL     not null,
     question    varchar(50) not null,
-    answer varchar(50) not null,
+    answer boolean not null,
     category varchar(50) not null,
-    pashe   int not null,
+    phase  int not null,
     PRIMARY KEY (id)
 );
