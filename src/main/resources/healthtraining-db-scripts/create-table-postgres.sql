@@ -13,9 +13,9 @@ CREATE TABLE user_model
 CREATE TABLE question_model
 (
     id       SERIAL     not null,
-    question    varchar(50) not null,
+    question    varchar(500) not null,
     answer boolean not null,
-    category varchar(50) not null,
+    category varchar(200) not null,
     phase  int not null,
     PRIMARY KEY (id)
 );
