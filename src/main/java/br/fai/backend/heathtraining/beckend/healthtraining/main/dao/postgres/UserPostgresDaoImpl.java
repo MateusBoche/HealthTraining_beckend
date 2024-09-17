@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserPostgresDaoImpl implements UserDao {
@@ -58,15 +59,29 @@ public class UserPostgresDaoImpl implements UserDao {
                 throw new RuntimeException(ex);
             }
 
-
-
             throw new RuntimeException(e);
         }
 
-
-
         return entity.getId();
     }
+
+    @Override
+    public void remove(int id) {
+        logger.log(Level.INFO, "Preparando para remover a entidade com id" + id);
+        final String sql = "DELETE FROM user_model WHERE id = ? ;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+            preparedStatement.close();
+            logger.log(Level.INFO,"Entidade removida com sucesso");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public UserModel readByEmail(String email) {
@@ -78,18 +93,50 @@ public class UserPostgresDaoImpl implements UserDao {
         return false;
     }
 
-    @Override
-    public void remove(int id) {
 
-    }
 
     @Override
     public UserModel readById(int id) {
-        return null;
+
+        final String sql = "SELECT * FROM user_model WHERE id = ? ;";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                final UserModel user = new UserModel();
+
+
+                user.setId(resultSet.getInt("id"));
+                user.setNomeCompleto(resultSet.getString("nomeCompleto"));
+                user.setSenha(resultSet.getString("senha"));
+
+                logger.log(Level.INFO, "entidade com id" + id + " encontrada");
+                return user;
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
+
 
     @Override
     public List<UserModel> readAll() {
+
+
+
         return null;
     }
 
