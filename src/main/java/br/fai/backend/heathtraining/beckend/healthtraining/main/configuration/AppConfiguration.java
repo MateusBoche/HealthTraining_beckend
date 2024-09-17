@@ -42,7 +42,7 @@ public class AppConfiguration {
 
     @Bean
     @Profile("fake")
-    public QuestionDao getQuestionDao(){
+    public QuestionDao getQuestionFakeDao(){
         return new QuestionFakeDaoImpl();
     }
 
