@@ -167,5 +167,20 @@ public class UserPostgresDaoImpl implements UserDao {
     @Override
     public void updateInformation(int id, UserModel entity) {
 
+
+        String sql = "UPDATE user_model SET fullname = ? ";
+        sql += " WHERE id = ? ";
+
+        try {
+            PreparedStatement preparedStatement;
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, entity.getNomeCompleto());
+            preparedStatement.setInt(2, entity.getId());
+            preparedStatement.execute();
+            preparedStatement.close();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
     }
 }
