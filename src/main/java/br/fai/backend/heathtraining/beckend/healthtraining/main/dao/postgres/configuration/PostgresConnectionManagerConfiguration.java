@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.*;
 
 @Configuration
-@Profile("postgres")
+@Profile("prod")
 public class PostgresConnectionManagerConfiguration {
 
     @Value("${spring.datasource.base.url}")
@@ -69,7 +69,7 @@ public class PostgresConnectionManagerConfiguration {
 
         final String basePath = "healthtraining-db-scripts";
         final String createTable = resourceFileService
-                .read(basePath + "/create-tables-postgres.sql");
+                .read(basePath + "/create-table-postgres.sql");
         PreparedStatement createStatement = connection
                 .prepareStatement(createTable);
         createStatement.executeUpdate();
