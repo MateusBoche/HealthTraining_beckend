@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class QuestionPostgresDaoImpl implements QuestionDao {
@@ -62,6 +63,18 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
     @Override
     public void remove(int id) {
+        logger.log(Level.INFO, "Preparando para remover a questao com o id " + id);
+        final String sql = " DELETE FROM question_model WHERE id = ? ;";
+
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.execute();
+            logger.log(Level.INFO, "Entidade removida com sucesso");
+            preparedStatement.close();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
     }
 
