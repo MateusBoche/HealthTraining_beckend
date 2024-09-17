@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS user_model;
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS question_model;
 
 CREATE TABLE user_model
 (
