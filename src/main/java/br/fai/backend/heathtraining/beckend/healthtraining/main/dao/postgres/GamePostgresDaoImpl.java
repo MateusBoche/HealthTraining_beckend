@@ -1,7 +1,9 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -146,8 +148,16 @@ public class GamePostgresDaoImpl implements GameDao {
         }
     }
 
+
     @Override
     public void updateInformation(int id, GameModel entity) {
+        return;
+
+    }
+
+    @Override
+    public boolean updatePoints(int gameId, int userId, int pointAcerto, int pointErro) {
+        return true;
 
     }
 }

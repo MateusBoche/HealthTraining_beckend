@@ -65,7 +65,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public boolean updatePoints(int gameId, int userId, int points) {
+    public boolean updatePoints(int gameId, int userId, int point, int pointErro) {
         return false;
     }
 }

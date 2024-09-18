@@ -2,5 +2,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.ga
 
 public interface UpdateGamePointsService {
 
-    boolean updatePoints(int gameId, int userId, int points);
+    boolean updatePoints(int gameId, int userId, int points, int pointErro);
 }

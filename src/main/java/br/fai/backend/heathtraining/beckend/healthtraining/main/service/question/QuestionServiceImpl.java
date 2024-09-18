@@ -51,7 +51,8 @@ public class QuestionServiceImpl implements QuestionService {
     if (entity == null) {
       return 0;
     }
-    if (entity.getQuestion().isEmpty() || entity.getCategory().isEmpty()) {
+    if (entity.getQuestion().isEmpty()
+            || entity.getCategory().isEmpty()){
       return 0;
 
     }

@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 public class GamePointsDto {
     private int gameId;
     private int userId;
-    private int points;
+    private int pointAcerto;
+    private int pointErro;
 }

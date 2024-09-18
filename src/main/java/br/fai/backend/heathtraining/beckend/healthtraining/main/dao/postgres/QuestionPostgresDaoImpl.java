@@ -25,7 +25,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
     @Override
     public int add(QuestionModel entity) {
         String sql = "INSERT INTO question_model(question, answer, category, phase) ";
-        sql+= " VALUES(?, ?, ?);";
+        sql+= " VALUES(?, ?, ?, ?);";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -97,7 +97,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
                 question.setId(resultSet.getInt("id"));
                 question.setQuestion(resultSet.getString("question"));
-                question.setAnswer(resultSet.getBoolean("aswer"));
+                question.setAnswer(resultSet.getBoolean("answer"));
                 question.setCategory(resultSet.getString("category"));
                 question.setPhase(resultSet.getInt("phase"));
 
@@ -133,7 +133,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
                 question.setId(resultSet.getInt("id"));
                 question.setQuestion(resultSet.getString("question"));
-                question.setAnswer(resultSet.getBoolean("aswer"));
+                question.setAnswer(resultSet.getBoolean("answer"));
                 question.setCategory(resultSet.getString("category"));
                 question.setPhase(resultSet.getInt("phase"));
 
@@ -184,7 +184,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
                 question.setId(resultSet.getInt("id"));
                 question.setQuestion(resultSet.getString("question"));
-                question.setAnswer(resultSet.getBoolean("aswer"));
+                question.setAnswer(resultSet.getBoolean("answer"));
                 question.setCategory(resultSet.getString("category"));
                 question.setPhase(resultSet.getInt("phase"));
 
