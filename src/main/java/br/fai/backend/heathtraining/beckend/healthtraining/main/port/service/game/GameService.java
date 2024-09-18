@@ -3,5 +3,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.ga
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.crud.CrudService;
 
-public interface GameService extends CrudService<GameModel> {
+public interface GameService extends CrudService<GameModel>, UpdateGamePointsService {
 }

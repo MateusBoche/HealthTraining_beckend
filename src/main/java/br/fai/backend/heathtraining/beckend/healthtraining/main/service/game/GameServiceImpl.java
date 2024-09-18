@@ -64,4 +64,8 @@ public class GameServiceImpl implements GameService {
         gameDao.updateInformation(id, entity);
     }
 
+    @Override
+    public boolean updatePoints(int gameId, int userId, int points) {
+        return false;
+    }
 }

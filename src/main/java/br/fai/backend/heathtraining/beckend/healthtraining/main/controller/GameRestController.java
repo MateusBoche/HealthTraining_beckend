@@ -1,6 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.controller;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.question.QuestionService;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,26 @@ public class GameRestController {
 //
 //    }
 
+//    @PutMapping("/{id}/{userId}/{points}")
+//    public ResponseEntity<Void> updateStatus(@PathVariable final int id, @PathVariable final int userId,@PathVariable final int points,) {
+//        gameService.update(id,data);
+//        return  ResponseEntity.ok().build();
+//
+//
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateStatus(@PathVariable final int id, @RequestBody final GamePointsDto gamePointsDto) {
+
+        final boolean response = gameService.updatePoints(id,gamePointsDto.getUserId(), gamePointsDto.getPoints());
+        if(!response) {
+
+        }
+
+        return  ResponseEntity.ok().build();
+
+
+    }
 
 
 }
