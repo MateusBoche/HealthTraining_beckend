@@ -146,4 +146,8 @@ public class GamePostgresDaoImpl implements GameDao {
         }
     }
 
+    @Override
+    public void updateInformation(int id, GameModel entity) {
+
+    }
 }
