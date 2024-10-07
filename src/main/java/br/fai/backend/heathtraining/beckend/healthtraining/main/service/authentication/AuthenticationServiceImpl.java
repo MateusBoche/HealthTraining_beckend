@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         UserModel user = userDao.readByEmail(email);
         if (user == null || !user.getSenha().equals(senha)){
-            throw new RuntimeException();
+            throw new RuntimeException("Email ou senha inválido");
         }
     }
 }
