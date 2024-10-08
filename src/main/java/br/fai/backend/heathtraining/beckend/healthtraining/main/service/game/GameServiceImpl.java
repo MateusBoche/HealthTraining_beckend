@@ -1,10 +1,12 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.service.game;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class GameServiceImpl implements GameService {
@@ -68,4 +70,20 @@ public class GameServiceImpl implements GameService {
     public boolean updatePoints(int gameId, int userId, int point, int pointErro) {
         return false;
     }
+
+
+    @Override
+    public GameModel readByBestUserPoints(GameModel gameModel) {
+        List<GameModel> bestPoint = new ArrayList<>();
+        System.out.println("find all foi chamado");
+        List<GameModel> games = gameDao.readAll();
+        for (GameModel game : games) {
+            if (game.getNumeroAcertos()<gameModel.getNumeroAcertos()){
+                bestPoint.add(gameModel);
+            }
+
+        }
+        return gameModel;
+    }
+
 }

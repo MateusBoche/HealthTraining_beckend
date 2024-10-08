@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user_model;
 DROP TABLE IF EXISTS question_model;
+DROP TABLE IF EXISTS game;
 
 CREATE TABLE user_model
 (
@@ -17,5 +18,17 @@ CREATE TABLE question_model
     answer boolean not null,
     category varchar(200) not null,
     phase  int not null,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE game
+(
+    id       SERIAL     not null,
+    status varchar(200) not null,
+    nivelAtual int not null,
+    usuarioID int not null,
+    numeroAcertos  int not null,
+    numeroErros int not null,
+    dataDeCriacao varchar(200) not null,
     PRIMARY KEY (id)
 );

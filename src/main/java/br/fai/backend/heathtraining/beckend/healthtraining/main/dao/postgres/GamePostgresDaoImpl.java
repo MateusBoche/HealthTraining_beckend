@@ -1,6 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
@@ -159,5 +160,40 @@ public class GamePostgresDaoImpl implements GameDao {
     public boolean updatePoints(int gameId, int userId, int pointAcerto, int pointErro) {
         return true;
 
+    }
+
+
+    @Override
+    public GameModel readByBestUserPoints(GameModel gameModel) {
+        final List<GameModel> bestPointGames =  new ArrayList<>();
+        String sql = "SELECT * FROM game";
+        sql+= " ORDER BY numeroacertos";
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                final GameModel game = new GameModel();
+
+                game.setId(resultSet.getInt("id"));
+                game.setStatus(resultSet.getString("status"));
+                game.setDataDeCriacao(resultSet.getString("datacriacao"));
+                game.setNivelAtual(resultSet.getInt("nivelatual"));
+                game.setNumeroErros(resultSet.getInt("numeroerros"));
+                game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
+                game.setUsuarioID(resultSet.getInt("usuarioid"));
+
+                bestPointGames.add(game);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return (GameModel) bestPointGames;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

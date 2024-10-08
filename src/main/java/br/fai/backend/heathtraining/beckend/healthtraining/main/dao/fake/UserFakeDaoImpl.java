@@ -117,4 +117,6 @@ public class UserFakeDaoImpl implements UserDao {
         user.setSenha(newPassword);
         return true;
     }
+
+
 }
