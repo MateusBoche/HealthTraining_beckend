@@ -80,7 +80,7 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public GameModel readById(int id) {
 
-        final String sql = "SELECT * FROM game WHERE id = ? ;";
+        final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -90,15 +90,23 @@ public class GamePostgresDaoImpl implements GameDao {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
-                final GameModel game = new GameModel();
 
-                game.setId(resultSet.getInt("id"));
-                game.setStatus(resultSet.getString("status"));
-                game.setDataDeCriacao(resultSet.getString("datacriacao"));
-                game.setNivelAtual(resultSet.getInt("nivelatual"));
-                game.setNumeroErros(resultSet.getInt("numeroerros"));
-                game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
-                game.setUsuarioID(resultSet.getInt("usuarioid"));
+              int entityId = resultSet.getInt("id");
+              String status = resultSet.getString("status");
+              String dataCriacao = resultSet.getString("datadecriacao");
+              int nivelAtual = resultSet.getInt("nivelatual");
+              int numeroErros = resultSet.getInt("numeroerros");
+              int numeroAcertos = resultSet.getInt("numeroacertos");
+              int usuarioId = resultSet.getInt("usuarioid");
+
+              final GameModel game = new GameModel();
+              game.setId(entityId);
+              game.setStatus(status);
+              game.setDataDeCriacao(dataCriacao);
+              game.setNivelAtual(nivelAtual);
+              game.setNumeroErros(numeroErros);
+              game.setNumeroAcertos(numeroAcertos);
+              game.setUsuarioID(usuarioId);
 
                 logger.log(Level.INFO,"entidade com id " + id + " encontrada");
                 return game;
@@ -127,17 +135,28 @@ public class GamePostgresDaoImpl implements GameDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                final GameModel game = new GameModel();
 
-                game.setId(resultSet.getInt("id"));
-                game.setStatus(resultSet.getString("status"));
-                game.setDataDeCriacao(resultSet.getString("datacriacao"));
-                game.setNivelAtual(resultSet.getInt("nivelatual"));
-                game.setNumeroErros(resultSet.getInt("numeroerros"));
-                game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
-                game.setUsuarioID(resultSet.getInt("usuarioid"));
 
-                games.add(game);
+
+              int entityId = resultSet.getInt("id");
+              String status = resultSet.getString("status");
+              String dataCriacao = resultSet.getString("datadecriacao");
+              int nivelAtual = resultSet.getInt("nivelatual");
+              int numeroErros = resultSet.getInt("numeroerros");
+              int numeroAcertos = resultSet.getInt("numeroacertos");
+              int usuarioId = resultSet.getInt("usuarioid");
+
+              final GameModel game = new GameModel();
+              game.setId(entityId);
+              game.setStatus(status);
+              game.setDataDeCriacao(dataCriacao);
+              game.setNivelAtual(nivelAtual);
+              game.setNumeroErros(numeroErros);
+              game.setNumeroAcertos(numeroAcertos);
+              game.setUsuarioID(usuarioId);
+
+
+              games.add(game);
             }
 
             resultSet.close();
