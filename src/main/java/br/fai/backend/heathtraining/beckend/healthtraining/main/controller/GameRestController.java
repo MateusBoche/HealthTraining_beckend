@@ -2,6 +2,7 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.controller;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.ListarMelhoresDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.question.QuestionService;
 import org.springframework.http.ResponseEntity;
@@ -95,8 +96,8 @@ public class GameRestController {
     }
 
     @GetMapping("/listar-melhores")
-    public ResponseEntity<List<GameModel>>bestGames(){
-        List<GameModel> games = gameService.readByBestUserPoints();
+    public ResponseEntity<List<ListarMelhoresDto>>bestGames(){
+        List<ListarMelhoresDto> games = gameService.readByBestUserPoints();
         return ResponseEntity.ok().body(games);
 
 

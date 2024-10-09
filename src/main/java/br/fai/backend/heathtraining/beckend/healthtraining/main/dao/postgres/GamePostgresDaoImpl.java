@@ -1,6 +1,8 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.ListarMelhoresDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 
 import java.sql.*;
@@ -230,10 +232,11 @@ public class GamePostgresDaoImpl implements GameDao {
 
 
     @Override
-    public List<GameModel> readByBestUserPoints() {
-        final List<GameModel> bestPointGames =  new ArrayList<>();
-        String sql = "SELECT * FROM game ";
-        sql+= " ORDER BY numeroacertos desc";
+    public List<ListarMelhoresDto> readByBestUserPoints() {
+        final List<ListarMelhoresDto> bestPointGames =  new ArrayList<>();
+        String sql = "select UM.nomeCompleto,* from game G ";
+        sql+= " inner join user_model UM on UM.id = G.usuarioid ";
+        sql+= " ORDER BY G.numeroacertos desc";
 
         try {
 
@@ -241,8 +244,9 @@ public class GamePostgresDaoImpl implements GameDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                final GameModel game = new GameModel();
+                final ListarMelhoresDto game = new ListarMelhoresDto();
 
+                game.setNomeUsuario(resultSet.getString("nomeCompleto"));
                 game.setId(resultSet.getInt("id"));
                 game.setStatus(resultSet.getString("status"));
                 game.setDataDeCriacao(resultSet.getString("datadecriacao"));
