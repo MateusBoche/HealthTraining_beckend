@@ -95,8 +95,8 @@ public class GameRestController {
     }
 
     @GetMapping("/listar-melhores")
-    public ResponseEntity<List<GameModel>>bestGames(GameModel game){
-        List<GameModel> games = (List<GameModel>) gameService.readByBestUserPoints(game);
+    public ResponseEntity<List<GameModel>>bestGames(){
+        List<GameModel> games = gameService.readByBestUserPoints();
         return ResponseEntity.ok().body(games);
 
 

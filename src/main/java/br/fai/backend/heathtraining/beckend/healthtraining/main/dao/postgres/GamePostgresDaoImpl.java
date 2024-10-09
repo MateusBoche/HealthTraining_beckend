@@ -230,7 +230,7 @@ public class GamePostgresDaoImpl implements GameDao {
 
 
     @Override
-    public GameModel readByBestUserPoints(GameModel gameModel) {
+    public List<GameModel> readByBestUserPoints() {
         final List<GameModel> bestPointGames =  new ArrayList<>();
         String sql = "SELECT * FROM game";
         sql+= " ORDER BY numeroacertos";
@@ -256,7 +256,7 @@ public class GamePostgresDaoImpl implements GameDao {
 
             resultSet.close();
             preparedStatement.close();
-            return (GameModel) bestPointGames;
+            return bestPointGames;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

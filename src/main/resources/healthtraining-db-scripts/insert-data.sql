@@ -73,8 +73,9 @@ VALUES
 ('As gazes com petrolatum são constituídas de malha (gazes) não aderente (não gruda na ferida) e embebida com óleo de petrolatum. São indicadas para peles descamativas, vulneráveis a lesões, com lesões superficiais como queimaduras, lesões por pressão (úlceras), lacerações e outras lesões em que o curativo não possa aderir à lesão.', true, 'Gazes com petrolatum', 3),
 ('As gazes com petrolatum são constituídas de malha (gazes) não aderente (não gruda na ferida) e embebida com ácido graxo essencial. São indicadas para peles descamativas, vulneráveis a lesões, com lesões superficiais como queimaduras, lesões por pressão (úlceras), lacerações e outras lesões em que o curativo não possa aderir à lesão.', false, 'Gazes com petrolatum', 3);
 
-
+insert into game (status, nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',5,5,200,0,'25/10/2025');
 insert into game (status,nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',1,2,20,10,'20/10/2021');
+insert into game (status,nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',1,6,60,10,'20/10/2021');
 insert into game (status, nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',2,3,50,2,'1/10/2021');
 insert into game (status, nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',5,3,100,0,'25/10/2025');
 

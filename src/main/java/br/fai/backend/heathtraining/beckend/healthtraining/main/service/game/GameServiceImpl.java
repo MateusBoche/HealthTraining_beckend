@@ -73,17 +73,40 @@ public class GameServiceImpl implements GameService {
 
 
   @Override
-  public GameModel readByBestUserPoints(GameModel gameModel) {
+  public List<GameModel> readByBestUserPoints() {
     List<GameModel> bestPoint = new ArrayList<>();
     System.out.println("find all foi chamado");
     List<GameModel> games = gameDao.readAll();
+    GameModel best = games.get(0);
     for (GameModel game : games) {
-      if (game.getNumeroAcertos() < gameModel.getNumeroAcertos()) {
-        bestPoint.add(gameModel);
+      if(best.getNumeroAcertos()<=game.getNumeroAcertos()){
+        best = game;
       }
 
     }
-    return gameModel;
+    bestPoint.add(best);
+    games.remove(best);
+    GameModel best2 = games.get(0);
+    for (GameModel game : games) {
+      if(best2.getNumeroAcertos()<=game.getNumeroAcertos()){
+        best2 = game;
+      }
+
+    }
+    bestPoint.add(best2);
+    games.remove(best2);
+
+    GameModel best3 = games.get(0);
+    for (GameModel game : games) {
+      if(best3.getNumeroAcertos()<=game.getNumeroAcertos()){
+        best3 = game;
+      }
+
+    }
+    bestPoint.add(best3);
+    games.remove(best3);
+
+    return bestPoint;
   }
 
   @Override
