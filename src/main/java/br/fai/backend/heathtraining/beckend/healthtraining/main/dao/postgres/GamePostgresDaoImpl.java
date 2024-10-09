@@ -1,10 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
-import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
-import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
-import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -123,7 +120,57 @@ public class GamePostgresDaoImpl implements GameDao {
             }}
     }
 
-    @Override
+  @Override
+  public List<GameModel> readGamesById(int id) {
+
+    final List<GameModel> games =  new ArrayList<>();
+    final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    try {
+      preparedStatement= connection.prepareStatement(sql);
+      preparedStatement.setInt(1,id);
+      resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+
+        int entityId = resultSet.getInt("id");
+        String status = resultSet.getString("status");
+        String dataCriacao = resultSet.getString("datadecriacao");
+        int nivelAtual = resultSet.getInt("nivelatual");
+        int numeroErros = resultSet.getInt("numeroerros");
+        int numeroAcertos = resultSet.getInt("numeroacertos");
+        int usuarioId = resultSet.getInt("usuarioid");
+
+        final GameModel game = new GameModel();
+        game.setId(entityId);
+        game.setStatus(status);
+        game.setDataDeCriacao(dataCriacao);
+        game.setNivelAtual(nivelAtual);
+        game.setNumeroErros(numeroErros);
+        game.setNumeroAcertos(numeroAcertos);
+        game.setUsuarioID(usuarioId);
+
+        games.add(game);
+
+        logger.log(Level.INFO,"entidade com id " + id + " encontrada");
+        return games;
+      }
+      return null;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }finally {
+      try {
+        resultSet.close();
+        preparedStatement.close();
+      }catch (SQLException e){
+        throw new RuntimeException(e);
+      }}
+  }
+
+
+  @Override
     public List<GameModel> readAll() {
 
         final List<GameModel> games =  new ArrayList<>();

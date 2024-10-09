@@ -11,79 +11,98 @@ import java.util.List;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private final GameDao gameDao;
+  private final GameDao gameDao;
 
-    public GameServiceImpl(GameDao gameDao) {
-        this.gameDao = gameDao;
+  public GameServiceImpl(GameDao gameDao) {
+    this.gameDao = gameDao;
+  }
+
+
+  @Override
+  public int create(GameModel entity) {
+    if (entity == null) {
+      return 0;
     }
 
-
-    @Override
-    public int create(GameModel entity) {
-        if (entity == null) {
-            return 0;
-        }
-
-        if (entity.getStatus() == null ||
-                entity.getStatus().isEmpty()) {
-            return 0;
-        }
-
-        int id = gameDao.add(entity);
-        return id;
+    if (entity.getStatus() == null ||
+      entity.getStatus().isEmpty()) {
+      return 0;
     }
 
-    @Override
-    public void delete(int id) {
-        if (id < 0) {
-            return;
-        }
-        gameDao.remove(id);
+    int id = gameDao.add(entity);
+    return id;
+  }
+
+  @Override
+  public void delete(int id) {
+    if (id < 0) {
+      return;
     }
+    gameDao.remove(id);
+  }
 
-    @Override
-    public GameModel findById(int id) {
-        if (id < 0) {
-            return null;
-        }
-        GameModel game = gameDao.readById(id);
-        return game;
+  @Override
+  public GameModel findById(int id) {
+    if (id < 0) {
+      return null;
     }
+    GameModel game = gameDao.readById(id);
+    return game;
+  }
 
-    @Override
-    public List<GameModel> findAll() {
-        System.out.println("find all foi chamado");
-        List<GameModel> games = gameDao.readAll();
-        return games;
+  @Override
+  public List<GameModel> findAll() {
+    System.out.println("find all foi chamado");
+    List<GameModel> games = gameDao.readAll();
+    return games;
+  }
+
+  @Override
+  public void update(int id, GameModel entity) {
+    GameModel game = findById(id);
+    if (game == null) {
+      return;
     }
+    gameDao.updateInformation(id, entity);
+  }
 
-    @Override
-    public void update(int id, GameModel entity) {
-        GameModel game = findById(id);
-        if (game == null){
-            return;
-        }
-        gameDao.updateInformation(id, entity);
+  @Override
+  public boolean updatePoints(int gameId, int userId, int point, int pointErro) {
+    return false;
+  }
+
+
+  @Override
+  public GameModel readByBestUserPoints(GameModel gameModel) {
+    List<GameModel> bestPoint = new ArrayList<>();
+    System.out.println("find all foi chamado");
+    List<GameModel> games = gameDao.readAll();
+    for (GameModel game : games) {
+      if (game.getNumeroAcertos() < gameModel.getNumeroAcertos()) {
+        bestPoint.add(gameModel);
+      }
+
     }
+    return gameModel;
+  }
 
-    @Override
-    public boolean updatePoints(int gameId, int userId, int point, int pointErro) {
-        return false;
+  @Override
+  public List<GameModel> readGamesById(int id) {
+    if (id < 0) {
+      return null;
     }
+    List<GameModel> games = new ArrayList<>();
+    List<GameModel> todos = gameDao.readAll();
+    GameModel game = gameDao.readById(id);
+    for (GameModel jogo : todos) {
+      if (game.getUsuarioID() == jogo.getUsuarioID()) {
+        games.add(game);
+
+      }
 
 
-    @Override
-    public GameModel readByBestUserPoints(GameModel gameModel) {
-        List<GameModel> bestPoint = new ArrayList<>();
-        System.out.println("find all foi chamado");
-        List<GameModel> games = gameDao.readAll();
-        for (GameModel game : games) {
-            if (game.getNumeroAcertos()<gameModel.getNumeroAcertos()){
-                bestPoint.add(gameModel);
-            }
-
-        }
-        return gameModel;
     }
-
+    return games;
+  }
 }
+

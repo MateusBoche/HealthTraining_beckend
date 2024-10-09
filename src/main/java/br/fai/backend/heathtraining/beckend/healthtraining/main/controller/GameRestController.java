@@ -32,6 +32,12 @@ public class GameRestController {
         return  ResponseEntity.ok().body(game);
     }
 
+    @GetMapping("/listar-jogos/{id}")
+    public ResponseEntity<List<GameModel>> getGamesForUserId(@PathVariable final  int id){
+      List<GameModel> games = gameService.readGamesById(id);
+      return ResponseEntity.ok().body(games);
+    }
+
     @PostMapping
     public ResponseEntity<GameModel> createGame(@RequestBody final GameModel data) {
         int id = gameService.create(data);
