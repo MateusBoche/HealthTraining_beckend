@@ -76,3 +76,5 @@ VALUES
 
 insert into game (status,nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',1,2,20,10,'20/10/2021');
 insert into game (status, nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',2,3,50,2,'1/10/2021');
+insert into game (status, nivelAtual, usuarioID, numeroAcertos, numeroErros, dataDeCriacao) VALUES ('pendente',5,3,100,0,'25/10/2025');
+

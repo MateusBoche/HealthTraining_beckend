@@ -89,7 +89,7 @@ public class GamePostgresDaoImpl implements GameDao {
             preparedStatement.setInt(1,id);
             resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()){
+            while (resultSet.next()) {
 
               int entityId = resultSet.getInt("id");
               String status = resultSet.getString("status");
