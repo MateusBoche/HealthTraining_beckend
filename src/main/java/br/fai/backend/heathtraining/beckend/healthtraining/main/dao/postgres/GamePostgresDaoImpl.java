@@ -77,7 +77,7 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public GameModel readById(int id) {
 
-        final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
+        final String sql = "SELECT * FROM game WHERE id = ? ;";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -155,9 +155,9 @@ public class GamePostgresDaoImpl implements GameDao {
         games.add(game);
 
         logger.log(Level.INFO,"entidade com id " + id + " encontrada");
-        return games;
+
       }
-      return null;
+        return games;
     } catch (Exception e) {
       throw new RuntimeException(e);
     }finally {

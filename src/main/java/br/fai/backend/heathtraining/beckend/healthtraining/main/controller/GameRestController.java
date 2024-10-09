@@ -49,13 +49,13 @@ public class GameRestController {
         return ResponseEntity.created(uri).build();
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Void> updateGame(@PathVariable final int id, @RequestBody final GameModel data) {
-//        gameService.update(id,data);
-//        return  ResponseEntity.ok().build();
-//
-//
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateGame(@PathVariable final int id, @RequestBody final GameModel data) {
+        gameService.update(id,data);
+        return  ResponseEntity.ok().build();
+
+
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGame(@PathVariable final int id) {
@@ -79,7 +79,7 @@ public class GameRestController {
 //
 //    }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar-status/{id}")
     public ResponseEntity<Void> updateStatus(@PathVariable final int id, @RequestBody final GamePointsDto gamePointsDto) {
 
         final boolean response = gameService.updatePoints(id,gamePointsDto.getUserId(), gamePointsDto.getPointAcerto(),gamePointsDto.getPointErro());

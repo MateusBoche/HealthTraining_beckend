@@ -114,17 +114,10 @@ public class GameServiceImpl implements GameService {
     if (id < 0) {
       return null;
     }
-    List<GameModel> games = new ArrayList<>();
+
     List<GameModel> todos = gameDao.readAll();
-    GameModel game = gameDao.readById(id);
-    for (GameModel jogo : todos) {
-      if (game.getUsuarioID() == jogo.getUsuarioID()) {
-        games.add(game);
+    List<GameModel> games = gameDao.readGamesById(id);
 
-      }
-
-
-    }
     return games;
   }
 }
