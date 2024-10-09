@@ -76,37 +76,37 @@ public class GameServiceImpl implements GameService {
   public List<GameModel> readByBestUserPoints() {
     List<GameModel> bestPoint = new ArrayList<>();
     System.out.println("find all foi chamado");
-    List<GameModel> games = gameDao.readAll();
-    GameModel best = games.get(0);
-    for (GameModel game : games) {
-      if(best.getNumeroAcertos()<=game.getNumeroAcertos()){
-        best = game;
-      }
+    List<GameModel> games = gameDao.readByBestUserPoints();
+//    GameModel best = games.get(0);
+//    for (GameModel game : games) {
+//      if(best.getNumeroAcertos()<=game.getNumeroAcertos()){
+//        best = game;
+//      }
+//
+//    }
+//    bestPoint.add(best);
+//    games.remove(best);
+//    GameModel best2 = games.get(0);
+//    for (GameModel game : games) {
+//      if(best2.getNumeroAcertos()<=game.getNumeroAcertos()){
+//        best2 = game;
+//      }
+//
+//    }
+//    bestPoint.add(best2);
+//    games.remove(best2);
+//
+//    GameModel best3 = games.get(0);
+//    for (GameModel game : games) {
+//      if(best3.getNumeroAcertos()<=game.getNumeroAcertos()){
+//        best3 = game;
+//      }
+//
+//    }
+//    bestPoint.add(best3);
+//    games.remove(best3);
 
-    }
-    bestPoint.add(best);
-    games.remove(best);
-    GameModel best2 = games.get(0);
-    for (GameModel game : games) {
-      if(best2.getNumeroAcertos()<=game.getNumeroAcertos()){
-        best2 = game;
-      }
-
-    }
-    bestPoint.add(best2);
-    games.remove(best2);
-
-    GameModel best3 = games.get(0);
-    for (GameModel game : games) {
-      if(best3.getNumeroAcertos()<=game.getNumeroAcertos()){
-        best3 = game;
-      }
-
-    }
-    bestPoint.add(best3);
-    games.remove(best3);
-
-    return bestPoint;
+    return games;
   }
 
   @Override
@@ -115,7 +115,7 @@ public class GameServiceImpl implements GameService {
       return null;
     }
 
-    List<GameModel> todos = gameDao.readAll();
+//    List<GameModel> todos = gameDao.readAll();
     List<GameModel> games = gameDao.readGamesById(id);
 
     return games;

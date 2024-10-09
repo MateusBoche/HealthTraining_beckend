@@ -232,8 +232,8 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public List<GameModel> readByBestUserPoints() {
         final List<GameModel> bestPointGames =  new ArrayList<>();
-        String sql = "SELECT * FROM game";
-        sql+= " ORDER BY numeroacertos";
+        String sql = "SELECT * FROM game ";
+        sql+= " ORDER BY numeroacertos desc";
 
         try {
 
@@ -245,7 +245,7 @@ public class GamePostgresDaoImpl implements GameDao {
 
                 game.setId(resultSet.getInt("id"));
                 game.setStatus(resultSet.getString("status"));
-                game.setDataDeCriacao(resultSet.getString("datacriacao"));
+                game.setDataDeCriacao(resultSet.getString("datadecriacao"));
                 game.setNivelAtual(resultSet.getInt("nivelatual"));
                 game.setNumeroErros(resultSet.getInt("numeroerros"));
                 game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
