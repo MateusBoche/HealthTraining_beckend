@@ -19,27 +19,27 @@ public class UserFakeDaoImpl implements UserDao {
         UserModel user1 = new UserModel();
         user1.setId(getNextId());
         user1.setEmail("Tiburssinho@gmail.com");
-        user1.setNomeCompleto("Tibursinho tibursios");
-        user1.setSenha("1234");
+        user1.setFullName("Tibursinho tibursios");
+        user1.setPassword("1234");
 
         UserModel user2 = new UserModel();
         user2.setId(getNextId());
         user2.setEmail("diltinho@gmail.com");
-        user2.setNomeCompleto("diltinho diltussios");
-        user2.setSenha("1234");
+        user2.setFullName("diltinho diltussios");
+        user2.setPassword("1234");
 
 
         UserModel user3 = new UserModel();
         user3.setId(getNextId());
         user3.setEmail("marquinho@gmail.com");
-        user3.setNomeCompleto("marquinho marquitus");
-        user3.setSenha("1234");
+        user3.setFullName("marquinho marquitus");
+        user3.setPassword("1234");
 
         UserModel user4 = new UserModel();
         user4.setId(getNextId());
         user4.setEmail("toninho@gmail.com");
-        user4.setNomeCompleto("toninho toninhus");
-        user4.setSenha("1234");
+        user4.setFullName("toninho toninhus");
+        user4.setPassword("1234");
 
         users.add(user1);
         users.add(user2);
@@ -73,7 +73,7 @@ public class UserFakeDaoImpl implements UserDao {
         }
 
         UserModel removedEntity = users.remove(itemIndex);
-        System.out.println("O usuario " + removedEntity.getNomeCompleto() + " foi removido. Id do usuario removido: " + removedEntity.getId());
+        System.out.println("O usuario " + removedEntity.getFullName() + " foi removido. Id do usuario removido: " + removedEntity.getId());
 
     }
 
@@ -97,7 +97,7 @@ public class UserFakeDaoImpl implements UserDao {
     @Override
     public void updateInformation(int id, UserModel entity) {
         UserModel user = readById(id);
-        user.setNomeCompleto(entity.getNomeCompleto());
+        user.setFullName(entity.getFullName());
 
     }
 
@@ -114,7 +114,7 @@ public class UserFakeDaoImpl implements UserDao {
     @Override
     public boolean updatePassword(int id, String newPassword) {
         UserModel user = readById(id);
-        user.setSenha(newPassword);
+        user.setPassword(newPassword);
         return true;
     }
 

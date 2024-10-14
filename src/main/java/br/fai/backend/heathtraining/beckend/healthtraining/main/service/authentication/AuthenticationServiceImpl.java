@@ -14,11 +14,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void authentication(String email, String senha) {
+    public UserModel authentication(String email, String senha) {
 
         UserModel user = userDao.readByEmail(email);
-        if (user == null || !user.getSenha().equals(senha)){
+        if (user == null || !user.getPassword().equals(senha)){
             throw new RuntimeException("Email ou senha inválido");
         }
+        return user;
     }
 }

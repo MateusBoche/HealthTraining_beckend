@@ -26,8 +26,8 @@ public class UserH2DaoImpl implements UserDao {
 
         final Map<String, Object> parameters = new HashMap<>();
         parameters.put("email", entity.getEmail());
-        parameters.put("senha",entity.getSenha());
-        parameters.put("nomeCompleto",entity.getNomeCompleto());
+        parameters.put("senha",entity.getPassword());
+        parameters.put("nomeCompleto",entity.getFullName());
 
         final Number id = simpleJdbcInsert.executeAndReturnKey(parameters);
         return id.intValue();
@@ -76,7 +76,7 @@ public class UserH2DaoImpl implements UserDao {
         stringBuilder.append(" nomeCompleto = ? ");
         stringBuilder.append(" WHERE id = ? ");
         jdbcTemplate.update(stringBuilder.toString(),
-                entity.getNomeCompleto(), id);
+                entity.getFullName(), id);
 
     }
 

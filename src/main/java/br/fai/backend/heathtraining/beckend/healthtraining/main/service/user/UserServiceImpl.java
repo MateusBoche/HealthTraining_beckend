@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
         if(entity == null){
             return 0;
         }
-        if (entity.getNomeCompleto().isEmpty()
-                || entity.getSenha().isEmpty()
+        if (entity.getFullName().isEmpty()
+                || entity.getPassword().isEmpty()
                 || entity.getEmail().isEmpty()){
             return 0;
         }
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        if (!user.getSenha().equals(oldPassword)) {
+        if (!user.getPassword().equals(oldPassword)) {
             return false;
         }
 
@@ -84,5 +84,14 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return userDao.readByEmail(email);
+    }
+
+    @Override
+    public UserModel authentication(String email, String senha) {
+        UserModel user = findByEmail(email);
+        if(!user.getPassword().equals(senha)) {
+            return null;
+        }
+        return user;
     }
 }

@@ -35,8 +35,8 @@ public class UserPostgresDaoImpl implements UserDao {
 
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, entity.getSenha());
-            preparedStatement.setString(2, entity.getNomeCompleto());
+            preparedStatement.setString(1, entity.getPassword());
+            preparedStatement.setString(2, entity.getFullName());
             preparedStatement.setString(3, entity.getEmail());
 
             preparedStatement.execute();
@@ -102,9 +102,9 @@ public class UserPostgresDaoImpl implements UserDao {
 
 
                 user.setId(resultSet.getInt("id"));
-                user.setNomeCompleto(resultSet.getString("nomeCompleto"));
+                user.setFullName(resultSet.getString("nomeCompleto"));
                 user.setEmail(resultSet.getString("email"));
-                user.setSenha(resultSet.getString("senha"));
+                user.setPassword(resultSet.getString("senha"));
 
                 logger.log(Level.INFO, "entidade com email" + email + " encontrada");
                 return user;
@@ -160,9 +160,9 @@ public class UserPostgresDaoImpl implements UserDao {
 
 
                 user.setId(resultSet.getInt("id"));
-                user.setNomeCompleto(resultSet.getString("nomeCompleto"));
+                user.setFullName(resultSet.getString("nomeCompleto"));
                 user.setEmail(resultSet.getString("email"));
-                user.setSenha(resultSet.getString("senha"));
+                user.setPassword(resultSet.getString("senha"));
 
                 logger.log(Level.INFO, "entidade com id" + id + " encontrada");
                 return user;
@@ -200,8 +200,8 @@ public class UserPostgresDaoImpl implements UserDao {
                 final UserModel user = new UserModel();
                 user.setId(entityId);
                 user.setEmail(email);
-                user.setNomeCompleto(nomeCompleto);
-                user.setSenha(senha);
+                user.setFullName(nomeCompleto);
+                user.setPassword(senha);
 
                 users.add(user);
             }
@@ -224,7 +224,7 @@ public class UserPostgresDaoImpl implements UserDao {
         try {
             PreparedStatement preparedStatement;
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, entity.getNomeCompleto());
+            preparedStatement.setString(1, entity.getFullName());
             preparedStatement.setInt(2, entity.getId());
             preparedStatement.execute();
             preparedStatement.close();

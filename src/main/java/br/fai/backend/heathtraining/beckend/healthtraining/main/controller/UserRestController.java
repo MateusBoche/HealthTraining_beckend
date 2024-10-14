@@ -4,6 +4,7 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.UpdatePasswordDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
 import org.apache.catalina.User;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/user")
 public class UserRestController {
@@ -70,7 +72,14 @@ public class UserRestController {
 
     }
 
-
+    @GetMapping("/{email}/{password}")
+    public ResponseEntity<UserModel> authenticate(@PathVariable final String email, @PathVariable final String password){
+        UserModel user = userService.authentication(email, password);
+        if(user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(user);
+    }
 
 
 

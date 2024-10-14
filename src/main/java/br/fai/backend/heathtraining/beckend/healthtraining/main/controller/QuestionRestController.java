@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/question")
 public class QuestionRestController {
