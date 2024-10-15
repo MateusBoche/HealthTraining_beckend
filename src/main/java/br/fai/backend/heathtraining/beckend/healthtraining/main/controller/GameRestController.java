@@ -43,12 +43,8 @@ public class GameRestController {
     @PostMapping
     public ResponseEntity<GameModel> createGame(@RequestBody final GameModel data) {
         int id = gameService.create(data);
-        final URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(id)
-                .toUri();
-        return ResponseEntity.created(uri).build();
+        data.setId(id);
+        return ResponseEntity.ok().body(data);
     }
 
     @PutMapping("/{id}")
