@@ -51,6 +51,7 @@ public class UserRestController {
         return ResponseEntity.created(uri).build();
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateEntity(@PathVariable final int id, @RequestBody final UserModel data){
         userService.update(id, data);

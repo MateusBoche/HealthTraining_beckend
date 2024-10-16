@@ -35,9 +35,9 @@ public class UserPostgresDaoImpl implements UserDao {
 
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, entity.getPassword());
-            preparedStatement.setString(2, entity.getFullName());
-            preparedStatement.setString(3, entity.getEmail());
+            preparedStatement.setString(1, entity.getFullName());
+            preparedStatement.setString(2, entity.getEmail());
+            preparedStatement.setString(3, entity.getPassword());
 
             preparedStatement.execute();
 
