@@ -24,8 +24,8 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
 
     @Override
     public int add(QuestionModel entity) {
-        String sql = "INSERT INTO question_model(question, answer, category, phase) ";
-        sql+= " VALUES(?, ?, ?, ?);";
+        String sql = "INSERT INTO question_model(question, answer, category, phase, link) ";
+        sql+= " VALUES(?, ?, ?, ?, ?);";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -39,6 +39,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
             preparedStatement.setBoolean(2, entity.isAnswer());
             preparedStatement.setString(3, entity.getCategory());
             preparedStatement.setInt(4, entity.getPhase());
+            preparedStatement.setString(5, entity.getLink());
 
             preparedStatement.execute();
 
@@ -136,6 +137,7 @@ public class QuestionPostgresDaoImpl implements QuestionDao {
                 question.setAnswer(resultSet.getBoolean("answer"));
                 question.setCategory(resultSet.getString("category"));
                 question.setPhase(resultSet.getInt("phase"));
+                question.setLink(resultSet.getString("link"));
 
                 questions.add(question);
             }

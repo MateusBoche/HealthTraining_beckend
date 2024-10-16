@@ -18,7 +18,9 @@ CREATE TABLE question_model
     answer boolean not null,
     category varchar(200) not null,
     phase  int not null,
+    link varchar(500),
     PRIMARY KEY (id)
+
 );
 
 CREATE TABLE game

@@ -13,5 +13,6 @@ public class QuestionModel {
     private String category;
     private int id; // string front
     private int phase;
+    private String link;
 
 }
