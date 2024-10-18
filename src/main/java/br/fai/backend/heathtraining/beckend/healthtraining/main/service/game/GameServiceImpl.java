@@ -9,6 +9,7 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.gam
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class GameServiceImpl implements GameService {
@@ -30,6 +31,8 @@ public class GameServiceImpl implements GameService {
       entity.getStatus().isEmpty()) {
       return 0;
     }
+
+
 
     int id = gameDao.add(entity);
     return id;

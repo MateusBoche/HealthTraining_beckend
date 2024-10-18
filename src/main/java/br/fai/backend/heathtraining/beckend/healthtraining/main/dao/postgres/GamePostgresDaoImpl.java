@@ -24,7 +24,7 @@ public class GamePostgresDaoImpl implements GameDao {
     @Override
     public int add(GameModel entity) {
         String sql = "INSERT INTO game(status, nivelAtual, usuarioId, numeroAcertos, numeroErros, dataDeCriacao, pontuacao)";
-        sql += " VALUES (?, ?, ?, ?, ?, ?, ?);";
+        sql += " VALUES (?, ?, ?, ?, ?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS') - INTERVAL '3 hours', ?);";
         PreparedStatement preparedStatement;
         ResultSet resultSet;
 
