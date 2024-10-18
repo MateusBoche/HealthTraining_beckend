@@ -78,16 +78,19 @@ public class GameRestController {
 //    }
 
     @PutMapping("/atualizar-status/{id}")
-    public ResponseEntity<Void> updateStatus(@PathVariable final int id, @RequestBody final GamePointsDto gamePointsDto) {
+    public ResponseEntity<Boolean> updateStatus(@PathVariable final int id, @RequestBody final GameModel gameAtualizar) {
 
-        final boolean response = gameService.updatePoints(id,gamePointsDto.getUserId(), gamePointsDto.getPointAcerto(),gamePointsDto.getPointErro());
+        final boolean response = gameService.updatePoints(id,gameAtualizar);
         if(!response) {
             System.out.println("pontos nao atualizados");
 
         }
 
 
-        return  ResponseEntity.ok().build();
+
+        return response?
+                ResponseEntity.ok().build()
+                : ResponseEntity.badRequest().build();
 
 
     }

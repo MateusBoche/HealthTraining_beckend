@@ -31,6 +31,7 @@ CREATE TABLE game
     usuarioID int not null,
     numeroAcertos  int not null,
     numeroErros int not null,
+    pontuacao int,
     dataDeCriacao varchar(200) not null,
     PRIMARY KEY (id)
 );

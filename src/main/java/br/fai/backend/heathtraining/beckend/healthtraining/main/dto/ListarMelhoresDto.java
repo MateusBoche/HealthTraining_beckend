@@ -13,5 +13,6 @@ public class ListarMelhoresDto {
     private int usuarioID;
     private int numeroAcertos;
     private int numeroErros;
+    private int pontuacao;
     private String dataDeCriacao;
 }

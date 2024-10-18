@@ -2,6 +2,7 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.service.game;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.ListarMelhoresDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.game.GameService;
@@ -68,8 +69,14 @@ public class GameServiceImpl implements GameService {
   }
 
   @Override
-  public boolean updatePoints(int gameId, int userId, int point, int pointErro) {
-    return false;
+  public boolean updatePoints(int gameId, GameModel gameatualizar) {
+    if (gameatualizar == null) {
+      return false;
+    }
+    boolean responseT = gameDao.updatePoints(gameId, gameatualizar);
+
+
+    return responseT;
   }
 
 
@@ -121,5 +128,6 @@ public class GameServiceImpl implements GameService {
 
     return games;
   }
+
 }
 

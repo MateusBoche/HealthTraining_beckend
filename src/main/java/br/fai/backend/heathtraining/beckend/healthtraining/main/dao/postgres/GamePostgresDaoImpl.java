@@ -2,6 +2,7 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.GamePointsDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.ListarMelhoresDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 
@@ -22,8 +23,8 @@ public class GamePostgresDaoImpl implements GameDao {
 
     @Override
     public int add(GameModel entity) {
-        String sql = "INSERT INTO game(status, nivelAtual, usuarioId, numeroAcertos, numeroErros, dataDeCriacao)";
-        sql += " VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO game(status, nivelAtual, usuarioId, numeroAcertos, numeroErros, dataDeCriacao, pontuacao)";
+        sql += " VALUES (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement;
         ResultSet resultSet;
 
@@ -37,6 +38,7 @@ public class GamePostgresDaoImpl implements GameDao {
             preparedStatement.setInt(4, entity.getNumeroAcertos());
             preparedStatement.setInt(5, entity.getNumeroErros());
             preparedStatement.setString(6, entity.getDataDeCriacao());
+            preparedStatement.setInt(7, entity.getPontuacao());
 
             preparedStatement.execute();
             resultSet = preparedStatement.getGeneratedKeys();
@@ -71,7 +73,7 @@ public class GamePostgresDaoImpl implements GameDao {
             preparedStatement.close();
             logger.log(Level.INFO, "entidade removida com sucesso");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -84,98 +86,104 @@ public class GamePostgresDaoImpl implements GameDao {
         ResultSet resultSet = null;
 
         try {
-            preparedStatement= connection.prepareStatement(sql);
-            preparedStatement.setInt(1,id);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
-              int entityId = resultSet.getInt("id");
-              String status = resultSet.getString("status");
-              String dataCriacao = resultSet.getString("datadecriacao");
-              int nivelAtual = resultSet.getInt("nivelatual");
-              int numeroErros = resultSet.getInt("numeroerros");
-              int numeroAcertos = resultSet.getInt("numeroacertos");
-              int usuarioId = resultSet.getInt("usuarioid");
+                int entityId = resultSet.getInt("id");
+                String status = resultSet.getString("status");
+                String dataCriacao = resultSet.getString("datadecriacao");
+                int nivelAtual = resultSet.getInt("nivelatual");
+                int numeroErros = resultSet.getInt("numeroerros");
+                int numeroAcertos = resultSet.getInt("numeroacertos");
+                int usuarioId = resultSet.getInt("usuarioid");
+                int pontuacao= resultSet.getInt("pontuacao");
 
-              final GameModel game = new GameModel();
-              game.setId(entityId);
-              game.setStatus(status);
-              game.setDataDeCriacao(dataCriacao);
-              game.setNivelAtual(nivelAtual);
-              game.setNumeroErros(numeroErros);
-              game.setNumeroAcertos(numeroAcertos);
-              game.setUsuarioID(usuarioId);
+                final GameModel game = new GameModel();
+                game.setId(entityId);
+                game.setStatus(status);
+                game.setDataDeCriacao(dataCriacao);
+                game.setNivelAtual(nivelAtual);
+                game.setNumeroErros(numeroErros);
+                game.setNumeroAcertos(numeroAcertos);
+                game.setUsuarioID(usuarioId);
+                game.setPontuacao(pontuacao);
 
-                logger.log(Level.INFO,"entidade com id " + id + " encontrada");
+                logger.log(Level.INFO, "entidade com id " + id + " encontrada");
                 return game;
             }
             return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             try {
                 resultSet.close();
                 preparedStatement.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
-            }}
+            }
+        }
     }
 
-  @Override
-  public List<GameModel> readGamesById(int id) {
+    @Override
+    public List<GameModel> readGamesById(int id) {
 
-    final List<GameModel> games =  new ArrayList<>();
-    final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
+        final List<GameModel> games = new ArrayList<>();
+        final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-    try {
-      preparedStatement= connection.prepareStatement(sql);
-      preparedStatement.setInt(1,id);
-      resultSet = preparedStatement.executeQuery();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
 
-      while (resultSet.next()) {
+            while (resultSet.next()) {
 
-        int entityId = resultSet.getInt("id");
-        String status = resultSet.getString("status");
-        String dataCriacao = resultSet.getString("datadecriacao");
-        int nivelAtual = resultSet.getInt("nivelatual");
-        int numeroErros = resultSet.getInt("numeroerros");
-        int numeroAcertos = resultSet.getInt("numeroacertos");
-        int usuarioId = resultSet.getInt("usuarioid");
+                int entityId = resultSet.getInt("id");
+                String status = resultSet.getString("status");
+                String dataCriacao = resultSet.getString("datadecriacao");
+                int nivelAtual = resultSet.getInt("nivelatual");
+                int numeroErros = resultSet.getInt("numeroerros");
+                int numeroAcertos = resultSet.getInt("numeroacertos");
+                int usuarioId = resultSet.getInt("usuarioid");
+                int pontuacao = resultSet.getInt("pontuacao");
 
-        final GameModel game = new GameModel();
-        game.setId(entityId);
-        game.setStatus(status);
-        game.setDataDeCriacao(dataCriacao);
-        game.setNivelAtual(nivelAtual);
-        game.setNumeroErros(numeroErros);
-        game.setNumeroAcertos(numeroAcertos);
-        game.setUsuarioID(usuarioId);
+                final GameModel game = new GameModel();
+                game.setId(entityId);
+                game.setStatus(status);
+                game.setDataDeCriacao(dataCriacao);
+                game.setNivelAtual(nivelAtual);
+                game.setNumeroErros(numeroErros);
+                game.setNumeroAcertos(numeroAcertos);
+                game.setUsuarioID(usuarioId);
+                game.setPontuacao(pontuacao);
 
-        games.add(game);
+                games.add(game);
 
-        logger.log(Level.INFO,"entidade com id " + id + " encontrada");
+                logger.log(Level.INFO, "entidade com id " + id + " encontrada");
 
-      }
-        return games;
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }finally {
-      try {
-        resultSet.close();
-        preparedStatement.close();
-      }catch (SQLException e){
-        throw new RuntimeException(e);
-      }}
-  }
+            }
+            return games;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
 
-  @Override
+    @Override
     public List<GameModel> readAll() {
 
-        final List<GameModel> games =  new ArrayList<>();
+        final List<GameModel> games = new ArrayList<>();
         final String sql = "SELECT * FROM game";
 
         try {
@@ -183,29 +191,30 @@ public class GamePostgresDaoImpl implements GameDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
 
 
+                int entityId = resultSet.getInt("id");
+                String status = resultSet.getString("status");
+                String dataCriacao = resultSet.getString("datadecriacao");
+                int nivelAtual = resultSet.getInt("nivelatual");
+                int numeroErros = resultSet.getInt("numeroerros");
+                int numeroAcertos = resultSet.getInt("numeroacertos");
+                int usuarioId = resultSet.getInt("usuarioid");
+                int pontuacao = resultSet.getInt("pontuacao");
 
-              int entityId = resultSet.getInt("id");
-              String status = resultSet.getString("status");
-              String dataCriacao = resultSet.getString("datadecriacao");
-              int nivelAtual = resultSet.getInt("nivelatual");
-              int numeroErros = resultSet.getInt("numeroerros");
-              int numeroAcertos = resultSet.getInt("numeroacertos");
-              int usuarioId = resultSet.getInt("usuarioid");
-
-              final GameModel game = new GameModel();
-              game.setId(entityId);
-              game.setStatus(status);
-              game.setDataDeCriacao(dataCriacao);
-              game.setNivelAtual(nivelAtual);
-              game.setNumeroErros(numeroErros);
-              game.setNumeroAcertos(numeroAcertos);
-              game.setUsuarioID(usuarioId);
+                final GameModel game = new GameModel();
+                game.setId(entityId);
+                game.setStatus(status);
+                game.setDataDeCriacao(dataCriacao);
+                game.setNivelAtual(nivelAtual);
+                game.setNumeroErros(numeroErros);
+                game.setNumeroAcertos(numeroAcertos);
+                game.setUsuarioID(usuarioId);
+                game.setPontuacao(pontuacao);
 
 
-              games.add(game);
+                games.add(game);
             }
 
             resultSet.close();
@@ -225,25 +234,56 @@ public class GamePostgresDaoImpl implements GameDao {
     }
 
     @Override
-    public boolean updatePoints(int gameId, int userId, int pointAcerto, int pointErro) {
-        return true;
+    public boolean updatePoints(int id, GameModel gamePoints) {
+        String sql = "UPDATE game SET numeroacertos = ?, numeroerros = ?, pontuacao = ?, nivelatual = ?";
+        sql += " WHERE id = ? ";
+
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setInt(1, gamePoints.getNumeroAcertos());
+            preparedStatement.setInt(2, gamePoints.getNumeroErros());
+            preparedStatement.setInt(3, gamePoints.getPontuacao());
+            preparedStatement.setInt(4, gamePoints.getNivelAtual());
+            preparedStatement.setInt(5, gamePoints.getId());
+
+
+            preparedStatement.execute();
+            resultSet = preparedStatement.getGeneratedKeys();
+            connection.commit();
+            resultSet.close();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            throw new RuntimeException(e);
+        }
 
     }
 
 
+
     @Override
     public List<ListarMelhoresDto> readByBestUserPoints() {
-        final List<ListarMelhoresDto> bestPointGames =  new ArrayList<>();
+        final List<ListarMelhoresDto> bestPointGames = new ArrayList<>();
         String sql = "select UM.nomeCompleto,* from game G ";
-        sql+= " inner join user_model UM on UM.id = G.usuarioid ";
-        sql+= " ORDER BY G.numeroacertos desc";
+        sql += " inner join user_model UM on UM.id = G.usuarioid ";
+        sql += " ORDER BY G.pontuacao desc ";
 
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 final ListarMelhoresDto game = new ListarMelhoresDto();
 
                 game.setNomeUsuario(resultSet.getString("nomeCompleto"));
@@ -254,6 +294,7 @@ public class GamePostgresDaoImpl implements GameDao {
                 game.setNumeroErros(resultSet.getInt("numeroerros"));
                 game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
                 game.setUsuarioID(resultSet.getInt("usuarioid"));
+                game.setPontuacao(resultSet.getInt("pontuacao"));
 
                 bestPointGames.add(game);
             }
@@ -267,3 +308,5 @@ public class GamePostgresDaoImpl implements GameDao {
         }
     }
 }
+
+
