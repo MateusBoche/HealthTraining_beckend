@@ -105,5 +105,22 @@ public class UserH2DaoImpl implements UserDao {
                 newPassword, id);
         return updatedItems !=0;
     }
+
+    @Override
+    public boolean recoveryPassword(int id, String newPassword) {
+        // Verificar se o usuário existe
+        String sqlCheckUser = "SELECT COUNT(*) FROM user_model WHERE id = ?";
+        int userCount = jdbcTemplate.queryForObject(sqlCheckUser, new Object[]{id}, Integer.class);
+
+        // Se o usuário não existir, retorne false
+        if (userCount == 0) {
+            return false;
+        }
+
+        // Se o usuário existir, atualize a senha
+        return updatePassword(id, newPassword);
+    }
+
+    // Outros métodos da interface UserDao...
 }
 

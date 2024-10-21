@@ -23,9 +23,9 @@ public class UserPostgresDaoImpl implements UserDao {
     }
 
     @Override
-    public int add(UserModel entity){
+    public int add(UserModel entity) {
         String sql = "INSERT INTO user_model(nomeCompleto, email, senha) ";
-        sql+= " VALUES(?, ?, ?);";
+        sql += " VALUES(?, ?, ?);";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -42,7 +42,7 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.execute();
 
             resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 final int id = resultSet.getInt(1);
                 entity.setId(id);
 
@@ -76,7 +76,7 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
             preparedStatement.close();
-            logger.log(Level.INFO,"Entidade removida com sucesso");
+            logger.log(Level.INFO, "Entidade removida com sucesso");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -110,13 +110,13 @@ public class UserPostgresDaoImpl implements UserDao {
                 return user;
             }
             return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             try {
                 resultSet.close();
                 preparedStatement.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -135,12 +135,10 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.execute();
             preparedStatement.close();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
     @Override
@@ -228,9 +226,25 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.setInt(2, entity.getId());
             preparedStatement.execute();
             preparedStatement.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public boolean recoveryPassword(int id, String newPassword) {
+        String sql = "UPDATE user_model SET senha = ? WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPassword); // Define a nova senha
+            preparedStatement.setInt(2, id); // Define o ID do usuário
+            preparedStatement.execute(); // Executa a atualização
+            preparedStatement.close();
+            return true; // Retorna verdadeiro se a execução for bem-sucedida
+        } catch (Exception e) {
+            throw new RuntimeException(e); // Lida com a exceção
+        }
     }
 }

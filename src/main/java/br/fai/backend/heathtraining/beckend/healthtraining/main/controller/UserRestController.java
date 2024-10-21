@@ -1,6 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.controller;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.RecoveryPasswordDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.UpdatePasswordDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
 import org.apache.catalina.User;
@@ -72,6 +73,14 @@ public class UserRestController {
                 : ResponseEntity.badRequest().build();
 
     }
+
+    @PutMapping("/recovery-password")
+    public ResponseEntity<Void> recoveryPassword(@RequestBody final RecoveryPasswordDto data) {
+        final boolean response = userService.recoveryPassword(data.getId(), data.getNewPassword());
+        return response ? ResponseEntity.ok().build() :
+                ResponseEntity.badRequest().build();
+    }
+
 
     @GetMapping("/{email}/{password}")
     public ResponseEntity<UserModel> authenticate(@PathVariable final String email, @PathVariable final String password){

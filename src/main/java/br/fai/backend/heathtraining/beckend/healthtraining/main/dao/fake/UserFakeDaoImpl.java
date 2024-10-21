@@ -119,4 +119,8 @@ public class UserFakeDaoImpl implements UserDao {
     }
 
 
+    @Override
+    public boolean recoveryPassword(int id, String newPassword) {
+        return false;
+    }
 }

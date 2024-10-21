@@ -78,6 +78,9 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+
+
+
     @Override
     public UserModel findByEmail(String email) {
         if (email.isEmpty()) {
@@ -93,5 +96,19 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public boolean recoveryPassword(int id, String newPassword) {
+        UserModel user = findById(id);
+        if (user == null) {
+            return false; // Retorna falso se o usuário não existir
+        }
+
+        // Atualizar a senha (lembre-se de aplicar hash à senha antes de salvar)
+        user.setPassword(newPassword);
+
+        boolean response = userDao.updatePassword(id, user.getPassword());
+        return response;
     }
 }
