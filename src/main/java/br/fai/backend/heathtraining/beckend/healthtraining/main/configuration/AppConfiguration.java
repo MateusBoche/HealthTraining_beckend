@@ -9,6 +9,9 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.dao.postgres.Use
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.game.GameDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.question.QuestionDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.UserDao;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.authentication.AuthenticationService;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.BasicAuthenticationServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -58,4 +61,9 @@ public class AppConfiguration {
         return new QuestionPostgresDaoImpl(connection);
     }
 
+    @Bean
+    @Profile("prod")
+    public AuthenticationService getAuthenticationService(UserService userService){
+        return new BasicAuthenticationServiceImpl(userService);
+    }
 }
