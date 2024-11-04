@@ -77,4 +77,5 @@ public class AppConfiguration {
                         .version("1.0.0")
                         .description("LDS API"));
     }
+    
 }
