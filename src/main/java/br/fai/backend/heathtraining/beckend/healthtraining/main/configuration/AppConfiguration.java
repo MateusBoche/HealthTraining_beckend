@@ -12,6 +12,8 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.Us
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.authentication.AuthenticationService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.BasicAuthenticationServiceImpl;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -65,5 +67,14 @@ public class AppConfiguration {
     @Profile("prod")
     public AuthenticationService getAuthenticationService(UserService userService){
         return new BasicAuthenticationServiceImpl(userService);
+    }
+
+    @Bean
+    public OpenAPI customOpenApi(){
+        return new OpenAPI()
+                .info(new Info()
+                        .title("LDS")
+                        .version("1.0.0")
+                        .description("LDS API"));
     }
 }
