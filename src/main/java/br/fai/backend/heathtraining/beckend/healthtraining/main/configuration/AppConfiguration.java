@@ -29,7 +29,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    @Profile("prod")
+    @Profile({"prod", "sec"})
     public UserDao getUserDao(final Connection connection){
         return new UserPostgresDaoImpl(connection);
     }
@@ -77,5 +77,5 @@ public class AppConfiguration {
                         .version("1.0.0")
                         .description("LDS API"));
     }
-    
+
 }
