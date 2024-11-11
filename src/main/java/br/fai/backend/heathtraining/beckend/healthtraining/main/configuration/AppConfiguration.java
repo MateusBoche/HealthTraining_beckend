@@ -31,21 +31,23 @@ public class AppConfiguration {
         System.out.println("aaaaaaaaaaaaa");
     }
 
-    @Bean
-    @Profile({"prod", "sec"})
-    public UserDao getUserDao(final Connection connection){
-        return new UserPostgresDaoImpl(connection);
-    }
 
     @Bean
     @Profile("fake")
     public UserDao getUserFakeDao(){
         return new UserFakeDaoImpl();
     }
+
     @Bean
     @Profile("dev")
     public UserDao getH2Dao(final JdbcTemplate jdbcTemplate){
         return new UserH2DaoImpl(jdbcTemplate);
+    }
+
+    @Bean
+    @Profile({"prod", "sec"})
+    public UserDao getUserDao(final Connection connection){
+        return new UserPostgresDaoImpl(connection);
     }
 
     @Bean
