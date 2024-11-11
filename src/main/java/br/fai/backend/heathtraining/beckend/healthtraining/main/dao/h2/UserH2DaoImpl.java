@@ -50,7 +50,8 @@ public class UserH2DaoImpl implements UserDao {
                                 rs.getInt("id"),
                                 rs.getString("email"),
                                 rs.getString("senha"),
-                                rs.getString("nomeCompleto")
+                                rs.getString("nomeCompleto"),
+                                UserModel.UserRole.valueOf(rs.getString("role"))
                         ));
         return entity;
     }
@@ -64,7 +65,8 @@ public class UserH2DaoImpl implements UserDao {
                                 rs.getInt("id"),
                                 rs.getString("email"),
                                 rs.getString("senha"),
-                                rs.getString("nomeCompleto")
+                                rs.getString("nomeCompleto"),
+                                UserModel.UserRole.valueOf(rs.getString("role"))
                         ));
         return entities;
     }
@@ -89,7 +91,8 @@ public class UserH2DaoImpl implements UserDao {
                                 rs.getInt("id"),
                                 rs.getString("email"),
                                 rs.getString("senha"),
-                                rs.getString("nomeCompleto")
+                                rs.getString("nomeCompleto"),
+                                UserModel.UserRole.valueOf(rs.getString("role"))
                         ));
         return entity;
     }

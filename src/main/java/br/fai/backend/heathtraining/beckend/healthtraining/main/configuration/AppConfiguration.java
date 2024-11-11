@@ -12,6 +12,7 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.Us
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.authentication.AuthenticationService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.BasicAuthenticationServiceImpl;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.JwtAuthenticationServiceImpl;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
@@ -78,14 +79,14 @@ public class AppConfiguration {
 
     @Bean
     @Profile("prod")
-    public AuthenticationService getAuthenticationService(UserService userService, final PasswordEncoder passwordEncoder){
+    public AuthenticationService basicAuthenticationService(UserService userService, final PasswordEncoder passwordEncoder){
         return new BasicAuthenticationServiceImpl(userService, passwordEncoder);
     }
 
     @Bean
     @Profile("sec")
-    public AuthenticationService basicAuthenticationService(final UserService userService, final PasswordEncoder passwordEncoder){
-        return new BasicAuthenticationServiceImpl(userService, passwordEncoder);
+    public AuthenticationService jwtAuthenticationService(final UserService userService, final PasswordEncoder passwordEncoder){
+        return new JwtAuthenticationServiceImpl(userService, passwordEncoder);
     }
 
     @Bean

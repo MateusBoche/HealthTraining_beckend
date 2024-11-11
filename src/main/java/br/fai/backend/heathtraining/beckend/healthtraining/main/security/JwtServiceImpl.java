@@ -1,7 +1,6 @@
-package br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication;
+package br.fai.backend.heathtraining.beckend.healthtraining.main.security;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
-import br.fai.backend.heathtraining.beckend.healthtraining.main.security.JwtService;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 
