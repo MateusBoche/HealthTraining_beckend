@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Connection;
 
@@ -63,11 +65,7 @@ public class AppConfiguration {
         return new QuestionPostgresDaoImpl(connection);
     }
 
-    @Bean
-    @Profile("prod")
-    public AuthenticationService getAuthenticationService(UserService userService){
-        return new BasicAuthenticationServiceImpl(userService);
-    }
+
 
     @Bean
     public OpenAPI customOpenApi(){
@@ -76,6 +74,23 @@ public class AppConfiguration {
                         .title("LDS")
                         .version("1.0.0")
                         .description("LDS API"));
+    }
+
+    @Bean
+    @Profile("prod")
+    public AuthenticationService getAuthenticationService(UserService userService, final PasswordEncoder passwordEncoder){
+        return new BasicAuthenticationServiceImpl(userService, passwordEncoder);
+    }
+
+    @Bean
+    @Profile("sec")
+    public AuthenticationService basicAuthenticationService(final UserService userService, final PasswordEncoder passwordEncoder){
+        return new BasicAuthenticationServiceImpl(userService, passwordEncoder);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

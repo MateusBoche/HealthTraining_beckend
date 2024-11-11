@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel authentication(String email, String senha) {
+    public UserModel authenticate(String email, String senha) {
         UserModel user = findByEmail(email);
         if(!user.getPassword().equals(senha)) {
             return null;

@@ -12,4 +12,10 @@ public class UserModel {
     private String fullName;
     private String email;
     private String password;
+    private UserRole role;
+
+    public enum UserRole{
+        ADMINISTRATOR,
+        USER,
+    }
 }
