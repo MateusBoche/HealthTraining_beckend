@@ -3,5 +3,5 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.au
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
 
 public interface AuthenticationService {
-    UserModel authentication(final String email, final String senha);
+    UserModel authenticate(final String email, final String senha);
 }
