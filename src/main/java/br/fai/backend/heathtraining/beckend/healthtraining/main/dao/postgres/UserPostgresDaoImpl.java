@@ -24,8 +24,8 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public int add(UserModel entity) {
-        String sql = "INSERT INTO user_model(nomeCompleto, email, senha) ";
-        sql += " VALUES(?, ?, ?);";
+        String sql = "INSERT INTO user_model(nomeCompleto, email, senha, role) ";
+        sql += " VALUES(?, ?, ?, ?);";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -38,6 +38,7 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.setString(1, entity.getFullName());
             preparedStatement.setString(2, entity.getEmail());
             preparedStatement.setString(3, entity.getPassword());
+            preparedStatement.setString(4, entity.getRole().name()); // administrator ou user que pode receber
 
             preparedStatement.execute();
 
@@ -100,11 +101,15 @@ public class UserPostgresDaoImpl implements UserDao {
 
                 final UserModel user = new UserModel();
 
+                String roleString = resultSet.getString("role");
+                UserModel.UserRole role = UserModel.UserRole.valueOf(roleString);
 
                 user.setId(resultSet.getInt("id"));
                 user.setFullName(resultSet.getString("nomeCompleto"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("senha"));
+                user.setRole(role);
+
 
                 logger.log(Level.INFO, "entidade com email" + email + " encontrada");
                 return user;
@@ -161,6 +166,10 @@ public class UserPostgresDaoImpl implements UserDao {
                 user.setFullName(resultSet.getString("nomeCompleto"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("senha"));
+                String password = resultSet.getString("senha");
+
+                String roleString = resultSet.getString("role");
+                UserModel.UserRole role = UserModel.UserRole.valueOf(roleString);
 
                 logger.log(Level.INFO, "entidade com id" + id + " encontrada");
                 return user;
@@ -195,11 +204,16 @@ public class UserPostgresDaoImpl implements UserDao {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
 
+                String roleString = resultSet.getString("role");
+                UserModel.UserRole role = UserModel.UserRole.valueOf(roleString);
+
+
                 final UserModel user = new UserModel();
                 user.setId(entityId);
                 user.setEmail(email);
                 user.setFullName(nomeCompleto);
                 user.setPassword(senha);
+                user.setRole(role);
 
                 users.add(user);
             }

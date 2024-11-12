@@ -11,7 +11,8 @@ CREATE TABLE user_model
     id       SERIAL     not null,
     email    varchar(50) not null,
     nomeCompleto varchar(50) not null,
-    senha varchar(50) not null,
+    senha varchar(60) not null,
+    role user_role not null,
     PRIMARY KEY (id)
 );
 
@@ -24,7 +25,6 @@ CREATE TABLE question_model
     phase  int not null,
     link varchar(500),
     PRIMARY KEY (id)
-
 );
 
 CREATE TABLE game

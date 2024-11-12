@@ -28,6 +28,7 @@ public class UserH2DaoImpl implements UserDao {
         parameters.put("email", entity.getEmail());
         parameters.put("senha",entity.getPassword());
         parameters.put("nomeCompleto",entity.getFullName());
+        parameters.put("role", entity.getRole().name());
 
         final Number id = simpleJdbcInsert.executeAndReturnKey(parameters);
         return id.intValue();
