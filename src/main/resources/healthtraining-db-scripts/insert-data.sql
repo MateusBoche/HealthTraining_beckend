@@ -1,8 +1,10 @@
-insert into user_model (email, nomeCompleto, senha) values ('a@a', 'tiburssin tiburssius', 'a');
-insert into user_model (email, nomeCompleto, senha) values ('s@s', 'aroldo aroldus', 'a');
-insert into user_model (email, nomeCompleto, senha) values ('d@d', 'cabral cabralzius', 'a');
-insert into user_model (email, nomeCompleto, senha) values ('f@f', 'tonin toninhus', 'a');
-insert into user_model (email, nomeCompleto, senha) values ('g@g', 'g g', 'a');
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+insert into user_model (email, nomeCompleto, senha, role) values ('a@a','tiburssin tiburssius',crypt('a', gen_salt('bf')), 'ADMINISTRATOR'););
+insert into user_model (email, nomeCompleto, senha, role) values ('s@s', 'aroldo aroldus', crypt('a', gen_salt('bf')), 'ADMINISTRATOR');
+insert into user_model (email, nomeCompleto, senha, role) values ('d@d', 'cabral cabralzius', crypt('a', gen_salt('bf')), 'USER');
+insert into user_model (email, nomeCompleto, senha, role) values ('f@f', 'tonin toninhus', crypt('a', gen_salt('bf')), 'USER');
+insert into user_model (email, nomeCompleto, senha, role) values ('g@g', 'g g', crypt('a', gen_salt('bf')), 'USER');
 
 insert into question_model(question, answer, category, phase,link) values ('Feridas crônicas ocorrem quando, fisiologicamente, o processo de cicatrização não ocorre da forma esperada. Alguns autores indicam que toda ferida com mais de 5 dias é considerada uma lesão crônica.', false, 'Feridas crônicas', 1, 'https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:c8f3e515-c3d8-48cb-a193-7c374dab666e');
 insert into question_model(question, answer, category, phase,link) values ('Feridas crônicas ocorrem quando, fisiologicamente, o processo de cicatrização não ocorre da forma esperada.', true, 'Feridas crônicas', 1,'https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:c8f3e515-c3d8-48cb-a193-7c374dab666e');
