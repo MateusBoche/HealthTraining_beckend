@@ -36,7 +36,7 @@ public class JwtServiceImpl implements JwtService {
     public Claims getAllClaimsFromToken(String token) {
         return Jwts
                 .parserBuilder()
-                .setSigningKey("qwe")
+                .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -75,7 +75,7 @@ public class JwtServiceImpl implements JwtService {
                 .setSubject(subject)
                 .setIssuedAt(issuedAt)
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, "qwe")
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 }
