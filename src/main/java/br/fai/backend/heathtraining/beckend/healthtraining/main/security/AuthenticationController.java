@@ -1,6 +1,7 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.security;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.dto.JwtTokenDto;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.authentication.AuthenticationService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<UserModel> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+    public ResponseEntity<JwtTokenDto> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
         String email = authenticationRequest.getEmail();
         String password = authenticationRequest.getPassword();
 
@@ -51,6 +52,8 @@ public class AuthenticationController {
         }
         System.out.println("jwt criado: " + jwtToken);
 
-        return ResponseEntity.ok(authenticatedUser);
+        final JwtTokenDto tokenDto = new JwtTokenDto(jwtToken);
+
+        return ResponseEntity.ok(tokenDto);
     }
 }
