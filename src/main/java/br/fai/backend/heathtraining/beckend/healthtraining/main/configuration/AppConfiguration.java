@@ -11,6 +11,8 @@ import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.questio
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.user.UserDao;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.authentication.AuthenticationService;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.service.user.UserService;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.security.JwtService;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.security.JwtServiceImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.BasicAuthenticationServiceImpl;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.service.authentication.JwtAuthenticationServiceImpl;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -94,6 +96,12 @@ public class AppConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Profile("sec")
+    public JwtService jwtService(){
+        return new JwtServiceImpl();
     }
 
 }
