@@ -2,7 +2,7 @@ package br.fai.backend.heathtraining.beckend.healthtraining.main.service.questio
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.QuestionModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.question.QuestionDao;
-import br.fai.backend.heathtraining.beckend.healthtraining.main.service.question.QuestionServiceImpl;
+import br.fai.backend.heathtraining.beckend.healthtraining.main.service.QuestionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

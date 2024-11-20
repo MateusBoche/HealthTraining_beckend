@@ -1,4 +1,4 @@
-package br.fai.backend.heathtraining.beckend.healthtraining.main.service.question;
+package br.fai.backend.heathtraining.beckend.healthtraining.main.service;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.GameModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.QuestionModel;
