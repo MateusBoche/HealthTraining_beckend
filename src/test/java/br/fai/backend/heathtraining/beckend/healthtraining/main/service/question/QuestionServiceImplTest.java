@@ -1,4 +1,4 @@
-package br.fai.backend.heathtraining.beckend.healthtraining.main.question;
+package br.fai.backend.heathtraining.beckend.healthtraining.main.service.question;
 
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.QuestionModel;
 import br.fai.backend.heathtraining.beckend.healthtraining.main.port.dao.question.QuestionDao;
