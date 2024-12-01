@@ -59,13 +59,13 @@ public class AppConfiguration {
     }
 
     @Bean
-    @Profile("prod")
+    @Profile({"prod", "sec"})
     public GameDao getGameDao(final Connection connection){
         return new GamePostgresDaoImpl(connection);
     }
 
     @Bean
-    @Profile("prod")
+    @Profile({"prod", "sec"})
     public QuestionDao getQuestionDao(final Connection connection){
         return new QuestionPostgresDaoImpl(connection);
     }
