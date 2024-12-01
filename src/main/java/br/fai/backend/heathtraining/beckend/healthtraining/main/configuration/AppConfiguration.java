@@ -19,6 +19,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -89,6 +90,7 @@ public class AppConfiguration {
 
     @Bean
     @Profile("sec")
+    @Primary
     public AuthenticationService jwtAuthenticationService(final UserService userService, final PasswordEncoder passwordEncoder){
         return new JwtAuthenticationServiceImpl(userService, passwordEncoder);
     }

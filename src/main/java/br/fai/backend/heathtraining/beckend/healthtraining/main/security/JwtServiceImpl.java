@@ -56,11 +56,12 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(UserDetails userDetails, String fullName, UserModel.UserRole role, String email) {
+    public String generateToken(UserDetails userDetails, String fullName, UserModel.UserRole role, String email, int id) {
         final Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
         claims.put("fullName", fullName);
-        claims.put("role", role);
+        claims.put("role", role.name());
+        claims.put("id", id);
         return createToken(claims, userDetails.getUsername());
     }
 

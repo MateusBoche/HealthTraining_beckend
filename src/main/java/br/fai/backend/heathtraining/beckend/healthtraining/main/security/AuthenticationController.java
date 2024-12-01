@@ -45,7 +45,7 @@ public class AuthenticationController {
             throw new UsernameNotFoundException("Email nao encontrado");
         }
 
-        final String jwtToken = jwtService.generateToken(userDetails, authenticatedUser.getFullName(), authenticatedUser.getRole(), authenticatedUser.getEmail());
+        final String jwtToken = jwtService.generateToken(userDetails, authenticatedUser.getFullName(), authenticatedUser.getRole(), authenticatedUser.getEmail(), authenticatedUser.getId());
 
         if(jwtToken == null || jwtToken.isEmpty()){
             throw new InternalError("Jwt invalido");
