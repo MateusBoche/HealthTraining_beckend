@@ -23,20 +23,39 @@ public class GameServiceImpl implements GameService {
 
   @Override
   public int create(GameModel entity) {
-    if (entity == null) {
-      return 0;
+    try {
+      // Valida se o objeto é nulo
+      if (entity == null) {
+        throw new IllegalArgumentException("O objeto GameModel não pode ser nulo.");
+      }
+
+      // Valida se os campos obrigatórios estão preenchidos
+      if (entity.getStatus() == null || entity.getStatus().isEmpty()) {
+        throw new IllegalArgumentException("O campo 'status' é obrigatório.");
+      }
+
+      if (entity.getUsuarioID() <= 0) {
+        throw new IllegalArgumentException("O campo 'usuarioID' deve ser válido.");
+      }
+
+      // Chama o DAO para inserir o jogo no banco de dados
+      int id = gameDao.add(entity);
+
+      // Verifica se o ID retornado é válido
+      if (id <= 0) {
+        throw new IllegalStateException("Erro ao criar o jogo no banco de dados. ID inválido retornado.");
+      }
+
+      return id;
+    } catch (IllegalArgumentException e) {
+      System.err.println("Erro de validação ao criar o jogo: " + e.getMessage());
+      return 0; // Retorna 0 em caso de erro de validação
+    } catch (Exception e) {
+      System.err.println("Erro inesperado ao criar o jogo: " + e.getMessage());
+      return 0; // Retorna 0 em caso de erro geral
     }
-
-    if (entity.getStatus() == null ||
-      entity.getStatus().isEmpty()) {
-      return 0;
-    }
-
-
-
-    int id = gameDao.add(entity);
-    return id;
   }
+
 
   @Override
   public void delete(int id) {
@@ -88,49 +107,21 @@ public class GameServiceImpl implements GameService {
     List<GameModel> bestPoint = new ArrayList<>();
     System.out.println("find all foi chamado");
     List<ListarMelhoresDto> games = gameDao.readByBestUserPoints();
-//    GameModel best = games.get(0);
-//    for (GameModel game : games) {
-//      if(best.getNumeroAcertos()<=game.getNumeroAcertos()){
-//        best = game;
-//      }
-//
-//    }
-//    bestPoint.add(best);
-//    games.remove(best);
-//    GameModel best2 = games.get(0);
-//    for (GameModel game : games) {
-//      if(best2.getNumeroAcertos()<=game.getNumeroAcertos()){
-//        best2 = game;
-//      }
-//
-//    }
-//    bestPoint.add(best2);
-//    games.remove(best2);
-//
-//    GameModel best3 = games.get(0);
-//    for (GameModel game : games) {
-//      if(best3.getNumeroAcertos()<=game.getNumeroAcertos()){
-//        best3 = game;
-//      }
-//
-//    }
-//    bestPoint.add(best3);
-//    games.remove(best3);
 
     return games;
   }
 
   @Override
-  public List<GameModel> readGamesById(int id) {
-    if (id < 0) {
-      return null;
-    }
-
-//    List<GameModel> todos = gameDao.readAll();
-    List<GameModel> games = gameDao.readGamesById(id);
-
+  public List<GameModel> readGamesByEmail(String email) {
+    List<GameModel> games = new ArrayList<>();
+    games = gameDao.readGamesByEmail(email);
     return games;
   }
+
+
+
+
+
 
 }
 
