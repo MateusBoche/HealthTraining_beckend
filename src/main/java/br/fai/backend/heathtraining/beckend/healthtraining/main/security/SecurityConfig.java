@@ -1,6 +1,8 @@
 package br.fai.backend.heathtraining.beckend.healthtraining.main.security;
 
+
 import br.fai.backend.heathtraining.beckend.healthtraining.main.domain.UserModel;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,9 +20,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-
-@Profile("sec")
 @Configuration
+@Profile("sec")
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -31,16 +32,15 @@ public class SecurityConfig {
 
 
     @Bean
-    public AuthenticationManager authenticationManager
-            (AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+
     }
 
-    @Bean // decorar isso
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        //csrf = cross-size request forgery
-        //session = status de uma sessao, tipo online, ausente do wpp, na api alguém solicita ele responde
+        // csrf = cross-site request forgery
 
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -48,26 +48,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        "/listar",
-                                        "/swagger-ui.html",
-                                        "/swagger-ui/**",
-                                        "/v3/api-docs/**",
-                                        "/h2-console/**",
-                                        "/authenticate"
+                                        "/listar","/swagger-ui.html","/swagger-ui/**", "/v3/api-docs/**","/h2-console/**","/authenticate"
                                 ).permitAll()
-
-                                .requestMatchers("/api/user/**").hasAuthority(UserModel.UserRole.USER.name())
-
-                                .requestMatchers("/api/playground/good-morning")
-                                .hasAuthority(UserModel.UserRole.ADMINISTRATOR.name())
-
-                                .requestMatchers("/api/playground/good-night")
-                                .hasAnyAuthority(UserModel.UserRole.ADMINISTRATOR.name(),UserModel.UserRole.USER.name())
-
-
+                                .requestMatchers("/api/**").hasAnyAuthority(UserModel.UserRole.USER.name(), UserModel.UserRole.ADMINISTRATOR.name())
+                                .requestMatchers("/api/product/**").hasAuthority(UserModel.UserRole.ADMINISTRATOR.name())
+                                .requestMatchers("/api/playground/good-morning").hasAuthority(UserModel.UserRole.ADMINISTRATOR.name())
+                                .requestMatchers("/api/playground/good-night").hasAnyAuthority(UserModel.UserRole.ADMINISTRATOR.name(), UserModel.UserRole.USER.name())
 
                                 .anyRequest().authenticated()
-
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -78,21 +66,16 @@ public class SecurityConfig {
                         )
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
-    @Bean // customiza o Cors - saber utilizar e explicar (dicas prova)
+    @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.applyPermitDefaultValues();
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS", "HEAD", "DELETE"));
-
-        UrlBasedCorsConfigurationSource source = new
-                UrlBasedCorsConfigurationSource();
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS", "HEAD","DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
-
 }

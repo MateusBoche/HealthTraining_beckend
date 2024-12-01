@@ -80,14 +80,6 @@ public class UserRestController {
     }
 
 
-    @GetMapping("/{email}/{password}")
-    public ResponseEntity<UserModel> authenticate(@PathVariable final String email, @PathVariable final String password){
-        UserModel user = userService.authenticate(email, password);
-        if(user == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().body(user);
-    }
 
 
 

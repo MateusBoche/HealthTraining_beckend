@@ -108,10 +108,10 @@ public class UserPostgresDaoImpl implements UserDao {
                 user.setFullName(resultSet.getString("nomeCompleto"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("senha"));
-                user.setRole(role);
+                user.setRole(UserModel.UserRole.valueOf(roleString));
 
 
-                logger.log(Level.INFO, "entidade com email" + email + " encontrada");
+                logger.log(Level.INFO, "entidade com email"  + email + " encontrada");
                 return user;
             }
             return null;

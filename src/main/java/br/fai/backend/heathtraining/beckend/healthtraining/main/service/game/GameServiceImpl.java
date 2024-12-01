@@ -24,28 +24,20 @@ public class GameServiceImpl implements GameService {
   @Override
   public int create(GameModel entity) {
     try {
-      // Valida se o objeto é nulo
       if (entity == null) {
         throw new IllegalArgumentException("O objeto GameModel não pode ser nulo.");
       }
-
-      // Valida se os campos obrigatórios estão preenchidos
       if (entity.getStatus() == null || entity.getStatus().isEmpty()) {
         throw new IllegalArgumentException("O campo 'status' é obrigatório.");
       }
-
       if (entity.getUsuarioID() <= 0) {
         throw new IllegalArgumentException("O campo 'usuarioID' deve ser válido.");
       }
-
-      // Chama o DAO para inserir o jogo no banco de dados
       int id = gameDao.add(entity);
-
       // Verifica se o ID retornado é válido
       if (id <= 0) {
         throw new IllegalStateException("Erro ao criar o jogo no banco de dados. ID inválido retornado.");
       }
-
       return id;
     } catch (IllegalArgumentException e) {
       System.err.println("Erro de validação ao criar o jogo: " + e.getMessage());
@@ -67,12 +59,14 @@ public class GameServiceImpl implements GameService {
 
   @Override
   public GameModel findById(int id) {
-    if (id < 0) {
-      return null;
-    }
+    System.out.println("Buscando jogo com ID: " + id);
     GameModel game = gameDao.readById(id);
+    if (game == null) {
+      System.out.println("Jogo não encontrado para o ID: " + id);
+    }
     return game;
   }
+
 
   @Override
   public List<GameModel> findAll() {

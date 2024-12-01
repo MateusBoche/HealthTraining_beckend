@@ -127,57 +127,7 @@ public class GamePostgresDaoImpl implements GameDao {
         }
     }
 
-    @Override
-    public List<GameModel> readGamesById(int id) {
 
-        final List<GameModel> games = new ArrayList<>();
-        final String sql = "SELECT * FROM game WHERE usuarioid = ? ;";
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-
-                int entityId = resultSet.getInt("id");
-                String status = resultSet.getString("status");
-                String dataCriacao = resultSet.getString("datadecriacao");
-                int nivelAtual = resultSet.getInt("nivelatual");
-                int numeroErros = resultSet.getInt("numeroerros");
-                int numeroAcertos = resultSet.getInt("numeroacertos");
-                int usuarioId = resultSet.getInt("usuarioid");
-                int pontuacao = resultSet.getInt("pontuacao");
-
-                final GameModel game = new GameModel();
-                game.setId(entityId);
-                game.setStatus(status);
-                game.setDataDeCriacao(dataCriacao);
-                game.setNivelAtual(nivelAtual);
-                game.setNumeroErros(numeroErros);
-                game.setNumeroAcertos(numeroAcertos);
-                game.setUsuarioID(usuarioId);
-                game.setPontuacao(pontuacao);
-
-                games.add(game);
-
-                logger.log(Level.INFO, "entidade com id " + id + " encontrada");
-
-            }
-            return games;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                resultSet.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
 
     @Override
@@ -235,40 +185,37 @@ public class GamePostgresDaoImpl implements GameDao {
 
     @Override
     public boolean updatePoints(int id, GameModel gamePoints) {
-        String sql = "UPDATE game SET numeroacertos = ?, numeroerros = ?, pontuacao = ?, nivelatual = ?";
-        sql += " WHERE id = ? ";
-
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
+        String sql = "UPDATE game SET numeroacertos = ?, numeroerros = ?, pontuacao = ?, nivelatual = ? WHERE id = ?";
+        System.out.println("SQL: " + sql);
+        System.out.println("Dados recebidos para atualização: " + gamePoints);
 
         try {
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, gamePoints.getNumeroAcertos());
             preparedStatement.setInt(2, gamePoints.getNumeroErros());
             preparedStatement.setInt(3, gamePoints.getPontuacao());
             preparedStatement.setInt(4, gamePoints.getNivelAtual());
-            preparedStatement.setInt(5, gamePoints.getId());
+            preparedStatement.setInt(5, id);
 
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Linhas afetadas: " + rowsAffected);
 
-            preparedStatement.execute();
-            resultSet = preparedStatement.getGeneratedKeys();
-            connection.commit();
-            resultSet.close();
+            connection.commit();connection.commit();
+            System.out.println("Transação commitada com sucesso para ID: " + id);
+
             preparedStatement.close();
-            return true;
+            return rowsAffected > 0;
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                ex.printStackTrace();
             }
-            throw new RuntimeException(e);
+            return false;
         }
-
     }
-
 
 
     @Override
@@ -307,6 +254,39 @@ public class GamePostgresDaoImpl implements GameDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<GameModel> readGamesByEmail(String email) {
+        final List<GameModel> games = new ArrayList<>();
+        final String sql = """
+        SELECT G.* FROM game G
+        INNER JOIN user_model UM ON UM.id = G.usuarioid
+        WHERE UM.email = ?;
+        """;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    GameModel game = new GameModel();
+                    game.setId(resultSet.getInt("id"));
+                    game.setStatus(resultSet.getString("status"));
+                    game.setDataDeCriacao(resultSet.getString("datadecriacao"));
+                    game.setNivelAtual(resultSet.getInt("nivelatual"));
+                    game.setNumeroErros(resultSet.getInt("numeroerros"));
+                    game.setNumeroAcertos(resultSet.getInt("numeroacertos"));
+                    game.setUsuarioID(resultSet.getInt("usuarioid"));
+                    game.setPontuacao(resultSet.getInt("pontuacao"));
+                    games.add(game);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar jogos por email: " + email, e);
+        }
+
+        return games;
+    }
+
 }
 
 
